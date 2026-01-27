@@ -6,16 +6,14 @@ Offline smartphone-based visual acuity screening using Tumbling E optotypes.
 
 ## Live App
 
-👉 **https://yourusername.github.io/eyescopeai/**
-
-*(Replace with your actual GitHub username after setup)*
+👉 **https://anirudhgangadharan.github.io/eyescope-ai/**
 
 ## Setup (2 minutes)
 
 1. Fork/clone this repo
 2. Go to repo **Settings** → **Pages**
 3. Source: **Deploy from branch** → **main** → **/ (root)** → **Save**
-4. Wait 1 min, your app is live at `https://yourusername.github.io/reponame/`
+4. Wait 1 min, your app is live at `https://anirudhgangadharan.github.io/eyescope-ai/`
 
 ## Install on Phone
 
