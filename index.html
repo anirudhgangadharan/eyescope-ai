@@ -36,7 +36,6 @@
             -webkit-user-select: none;
         }
         
-        /* Screens */
         .screen {
             display: none;
             width: 100%;
@@ -48,7 +47,6 @@
             display: flex;
         }
         
-        /* Home Screen */
         #homeScreen {
             justify-content: center;
             align-items: center;
@@ -56,10 +54,7 @@
             text-align: center;
         }
         
-        .logo {
-            font-size: 72px;
-            margin-bottom: 16px;
-        }
+        .logo { font-size: 72px; margin-bottom: 16px; }
         
         .title {
             font-size: 32px;
@@ -97,9 +92,7 @@
             color: #333;
         }
         
-        .card ol {
-            padding-left: 20px;
-        }
+        .card ol { padding-left: 20px; }
         
         .input-group {
             width: 100%;
@@ -124,9 +117,8 @@
             transition: border-color 0.2s;
         }
         
-        .input-group input:focus {
-            border-color: var(--primary);
-        }
+        .input-group input:focus { border-color: var(--primary); }
+        .input-group input.required-field { border-color: var(--error); }
         
         .btn {
             padding: 16px 32px;
@@ -140,19 +132,11 @@
             max-width: 400px;
         }
         
-        .btn:active {
-            transform: scale(0.98);
-        }
-        
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .btn-accent {
-            background: var(--accent);
-            color: white;
-        }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         
         .version {
             font-size: 12px;
@@ -160,10 +144,17 @@
             margin-top: 24px;
         }
         
-        /* Test Screen */
-        #testScreen {
-            background: white;
+        .sync-status {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-top: 8px;
         }
+        
+        .sync-status.online { background: #E8F5E9; color: var(--success); }
+        .sync-status.offline { background: #FFF3E0; color: var(--accent); }
+        
+        #testScreen { background: white; }
         
         .test-header {
             background: var(--primary);
@@ -174,15 +165,8 @@
             align-items: center;
         }
         
-        .eye-indicator {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        .progress-text {
-            font-size: 14px;
-            opacity: 0.9;
-        }
+        .eye-indicator { font-size: 18px; font-weight: bold; }
+        .progress-text { font-size: 14px; opacity: 0.9; }
         
         .acuity-display {
             background: var(--gray-light);
@@ -237,26 +221,17 @@
             transition: background-color 0.2s;
         }
         
-        .feedback-bar.correct {
-            background: var(--success);
-        }
+        .feedback-bar.correct { background: var(--success); }
+        .feedback-bar.incorrect { background: var(--error); }
         
-        .feedback-bar.incorrect {
-            background: var(--error);
-        }
-        
-        /* Results Screen */
         #resultsScreen {
             justify-content: center;
             align-items: center;
             padding: 24px;
+            overflow-y: auto;
         }
         
-        .check-icon {
-            font-size: 64px;
-            color: var(--success);
-            margin-bottom: 16px;
-        }
+        .check-icon { font-size: 64px; color: var(--success); margin-bottom: 16px; }
         
         .results-card {
             background: white;
@@ -293,32 +268,26 @@
             font-size: 16px;
         }
         
-        .eye-result p {
-            font-size: 16px;
-            margin: 4px 0;
-        }
+        .eye-result p { font-size: 16px; margin: 4px 0; }
+        .eye-result .decimal { font-size: 14px; color: var(--gray); }
+        .timestamp { font-size: 12px; color: var(--gray); margin-top: 16px; }
         
-        .eye-result .decimal {
+        .btn-group { width: 100%; max-width: 400px; }
+        .btn-group .btn { margin-bottom: 12px; }
+        
+        .save-status {
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
             font-size: 14px;
-            color: var(--gray);
         }
         
-        .timestamp {
-            font-size: 12px;
-            color: var(--gray);
-            margin-top: 16px;
-        }
+        .save-status.saving { background: #E3F2FD; color: var(--primary); }
+        .save-status.saved { background: #E8F5E9; color: var(--success); }
+        .save-status.error { background: #FFEBEE; color: var(--error); }
+        .save-status.queued { background: #FFF3E0; color: var(--accent); }
         
-        .btn-group {
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .btn-group .btn {
-            margin-bottom: 12px;
-        }
-        
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -332,9 +301,7 @@
             z-index: 1000;
         }
         
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
         
         .modal-content {
             background: white;
@@ -344,30 +311,35 @@
             text-align: center;
         }
         
-        .modal-content h3 {
-            color: var(--primary-dark);
-            margin-bottom: 16px;
-        }
+        .modal-content h3 { color: var(--primary-dark); margin-bottom: 16px; }
+        .modal-content p { margin-bottom: 20px; line-height: 1.6; }
         
-        .modal-content p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        
-        /* Swipe Animation Feedback */
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
         
-        .processing {
-            animation: pulse 0.5s ease-in-out;
+        .processing { animation: pulse 0.5s ease-in-out; }
+        
+        .pending-badge {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: none;
         }
+        
+        .pending-badge.show { display: block; }
     </style>
 </head>
 <body>
-    <!-- Home Screen -->
+    <div id="pendingBadge" class="pending-badge"></div>
+
     <div id="homeScreen" class="screen active">
         <div class="logo">👁️</div>
         <div class="title">EyeScopeAI</div>
@@ -385,16 +357,16 @@
         </div>
         
         <div class="input-group">
-            <label for="subjectId">Name (Optional)</label>
-            <input type="text" id="subjectId" placeholder="Enter Name">
+            <label for="subjectId">Subject ID <strong style="color: var(--error);">*</strong></label>
+            <input type="text" id="subjectId" placeholder="Enter Subject ID (required)">
         </div>
         
         <button class="btn btn-primary" onclick="startTest()">Start Vision Test</button>
         
-        <div class="version">v1.0.0-alpha | ICMR STS 2025</div>
+        <div class="version">v1.1.0 | ICMR STS 2025</div>
+        <div id="syncStatus" class="sync-status online">● Online - Data will sync</div>
     </div>
     
-    <!-- Test Screen -->
     <div id="testScreen" class="screen">
         <div class="test-header">
             <span class="eye-indicator" id="eyeIndicator">Right Eye (OD)</span>
@@ -410,21 +382,18 @@
             <span class="direction-hint hint-down">↓</span>
             <span class="direction-hint hint-left">←</span>
             <span class="direction-hint hint-right">→</span>
-            
             <div class="tumbling-e" id="tumblingE">E</div>
         </div>
         
-        <div class="instructions-bar">
-            Swipe in the direction the E is pointing
-        </div>
-        
+        <div class="instructions-bar">Swipe in the direction the E is pointing</div>
         <div class="feedback-bar" id="feedbackBar"></div>
     </div>
     
-    <!-- Results Screen -->
     <div id="resultsScreen" class="screen">
         <div class="check-icon">✓</div>
         <div class="title">Test Complete</div>
+        
+        <div id="saveStatus" class="save-status saving">⏳ Saving to database...</div>
         
         <div class="results-card">
             <h2>Your Results</h2>
@@ -448,12 +417,12 @@
         </div>
         
         <div class="btn-group">
-            <button class="btn btn-primary" onclick="restartTest()">Restart Test</button>
+            <button class="btn btn-success" onclick="restartTest()">✓ Next Patient</button>
+            <button class="btn btn-primary" onclick="retrySync()" id="retryBtn" style="display:none;">↻ Retry Upload</button>
             <button class="btn btn-accent" onclick="shareResults()">Share Results</button>
         </div>
     </div>
     
-    <!-- Eye Transition Modal -->
     <div id="transitionModal" class="modal">
         <div class="modal-content">
             <h3>Right Eye Complete</h3>
@@ -463,35 +432,24 @@
     </div>
 
     <script>
-        // =====================================================
-        // EyeScopeAI - Tumbling E Visual Acuity Test
-        // ETDRS/LogMAR Standard Implementation
-        // =====================================================
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyPQ_ajsygSEIVsVcl_oRTij7iXISbeRc-BPUt3se5or8vFNeuwQ60g9IE1NQ8W1dcrqw/exec';
+        const STORAGE_KEY = 'eyescopeai_pending';
         
-        // Configuration
         const CONFIG = {
-            MAX_WRONG_CONSECUTIVE: 2,  // Stop after 2 consecutive wrong
-            TRIALS_PER_LINE: 3,        // 3 trials per LogMAR line
-            MIN_CORRECT_TO_PASS: 2,    // Need 2/3 correct to pass line
-            BASE_SIZE_VW: 45,          // Base size in vw for LogMAR 1.0
-            FEEDBACK_DELAY: 400,       // Delay between trials in ms
-            SWIPE_THRESHOLD: 50        // Minimum swipe distance
+            MAX_WRONG_CONSECUTIVE: 2,
+            TRIALS_PER_LINE: 3,
+            MIN_CORRECT_TO_PASS: 2,
+            BASE_SIZE_VW: 45,
+            FEEDBACK_DELAY: 400,
+            SWIPE_THRESHOLD: 50
         };
         
-        // LogMAR Scale (11 lines: 1.0 to 0.0)
         const LOGMAR_VALUES = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0];
         const SNELLEN_VALUES = ['6/60', '6/48', '6/38', '6/30', '6/24', '6/19', '6/15', '6/12', '6/9.5', '6/7.5', '6/6'];
         
-        // Direction constants
-        const DIRECTIONS = {
-            RIGHT: 0,
-            UP: 90,
-            LEFT: 180,
-            DOWN: 270
-        };
+        const DIRECTIONS = { RIGHT: 0, UP: 90, LEFT: 180, DOWN: 270 };
         const DIR_ARRAY = [0, 90, 180, 270];
         
-        // Test State
         let state = {
             subjectId: '',
             isRightEye: true,
@@ -506,12 +464,8 @@
             testStartTime: null
         };
         
-        // Touch tracking
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchStartTime = 0;
+        let touchStartX = 0, touchStartY = 0;
         
-        // DOM Elements
         const screens = {
             home: document.getElementById('homeScreen'),
             test: document.getElementById('testScreen'),
@@ -527,12 +481,112 @@
             tumblingE: document.getElementById('tumblingE'),
             feedbackBar: document.getElementById('feedbackBar'),
             transitionModal: document.getElementById('transitionModal'),
-            transitionMessage: document.getElementById('transitionMessage')
+            transitionMessage: document.getElementById('transitionMessage'),
+            saveStatus: document.getElementById('saveStatus'),
+            retryBtn: document.getElementById('retryBtn'),
+            syncStatus: document.getElementById('syncStatus'),
+            pendingBadge: document.getElementById('pendingBadge')
         };
         
-        // =====================================================
-        // Screen Management
-        // =====================================================
+        function updateOnlineStatus() {
+            const isOnline = navigator.onLine;
+            elements.syncStatus.className = 'sync-status ' + (isOnline ? 'online' : 'offline');
+            elements.syncStatus.textContent = isOnline ? '● Online - Data will sync' : '● Offline - Data saved locally';
+            if (isOnline) syncPendingData();
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        
+        function getPendingData() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+            catch { return []; }
+        }
+        
+        function savePendingData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            updatePendingBadge();
+        }
+        
+        function updatePendingBadge() {
+            const pending = getPendingData();
+            if (pending.length > 0) {
+                elements.pendingBadge.textContent = `${pending.length} pending`;
+                elements.pendingBadge.classList.add('show');
+            } else {
+                elements.pendingBadge.classList.remove('show');
+            }
+        }
+        
+        async function saveToBackend(data) {
+            elements.saveStatus.className = 'save-status saving';
+            elements.saveStatus.textContent = '⏳ Saving to database...';
+            elements.retryBtn.style.display = 'none';
+            
+            const pending = getPendingData();
+            const dataWithId = { ...data, _tempId: Date.now() };
+            pending.push(dataWithId);
+            savePendingData(pending);
+            
+            if (!navigator.onLine) {
+                elements.saveStatus.className = 'save-status queued';
+                elements.saveStatus.textContent = '📱 Saved offline - will sync when online';
+                return;
+            }
+            
+            try {
+                await fetch(BACKEND_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const updatedPending = getPendingData().filter(d => d._tempId !== dataWithId._tempId);
+                savePendingData(updatedPending);
+                
+                elements.saveStatus.className = 'save-status saved';
+                elements.saveStatus.textContent = '✓ Saved to database';
+            } catch (error) {
+                console.error('Save error:', error);
+                elements.saveStatus.className = 'save-status error';
+                elements.saveStatus.textContent = '⚠ Save failed - stored locally';
+                elements.retryBtn.style.display = 'block';
+            }
+        }
+        
+        async function syncPendingData() {
+            const pending = getPendingData();
+            if (pending.length === 0) return;
+            
+            for (const data of pending) {
+                try {
+                    await fetch(BACKEND_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const updated = getPendingData().filter(d => d._tempId !== data._tempId);
+                    savePendingData(updated);
+                } catch (error) {
+                    console.error('Sync error:', error);
+                    break;
+                }
+            }
+            updatePendingBadge();
+        }
+        
+        function retrySync() {
+            if (navigator.onLine) {
+                syncPendingData();
+                const data = buildResultData();
+                saveToBackend(data);
+            } else {
+                alert('Still offline. Data is saved locally and will sync automatically when online.');
+            }
+        }
         
         function showScreen(screenName) {
             Object.values(screens).forEach(s => s.classList.remove('active'));
@@ -543,13 +597,18 @@
             elements.transitionModal.classList.toggle('active', show);
         }
         
-        // =====================================================
-        // Test Control Functions
-        // =====================================================
-        
         function startTest() {
-            state.subjectId = elements.subjectIdInput.value.trim() || 
-                              'ANON_' + Date.now();
+            const subjectId = elements.subjectIdInput.value.trim();
+            
+            if (!subjectId) {
+                elements.subjectIdInput.classList.add('required-field');
+                elements.subjectIdInput.focus();
+                alert('Please enter Subject ID');
+                return;
+            }
+            
+            elements.subjectIdInput.classList.remove('required-field');
+            state.subjectId = subjectId;
             state.testStartTime = new Date();
             
             resetTestState();
@@ -582,49 +641,29 @@
             showScreen('home');
         }
         
-        // =====================================================
-        // Trial Presentation
-        // =====================================================
-        
         function presentNextTrial() {
-            // Update UI
-            elements.eyeIndicator.textContent = state.isRightEye ? 
-                'Right Eye (OD)' : 'Left Eye (OS)';
-            
-            elements.progressText.textContent = 
-                `Line ${state.currentLine + 1}/${LOGMAR_VALUES.length} | Trial ${state.trialOnLine + 1}/${CONFIG.TRIALS_PER_LINE}`;
+            elements.eyeIndicator.textContent = state.isRightEye ? 'Right Eye (OD)' : 'Left Eye (OS)';
+            elements.progressText.textContent = `Line ${state.currentLine + 1}/${LOGMAR_VALUES.length} | Trial ${state.trialOnLine + 1}/${CONFIG.TRIALS_PER_LINE}`;
             
             const currentLogMAR = LOGMAR_VALUES[state.currentLine];
             const decimalVA = Math.pow(10, -currentLogMAR);
-            elements.acuityDisplay.textContent = 
-                `LogMAR: ${currentLogMAR.toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]} | Decimal: ${decimalVA.toFixed(2)}`;
+            elements.acuityDisplay.textContent = `LogMAR: ${currentLogMAR.toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]} | Decimal: ${decimalVA.toFixed(2)}`;
             
-            // Randomize direction
             state.currentDirection = DIR_ARRAY[Math.floor(Math.random() * 4)];
             
-            // Calculate size (10^0.1 ≈ 1.2589 ratio between lines)
             const sizeMultiplier = Math.pow(1.2589, state.currentLine);
             const currentSizeVW = CONFIG.BASE_SIZE_VW / sizeMultiplier;
             
-            // Apply to E
             elements.tumblingE.style.fontSize = `${currentSizeVW}vw`;
             elements.tumblingE.style.transform = `rotate(${-state.currentDirection}deg)`;
             
-            // Reset feedback
             elements.feedbackBar.className = 'feedback-bar';
         }
         
-        // =====================================================
-        // Touch/Swipe Detection
-        // =====================================================
-        
         function setupTouchListeners() {
             const testArea = elements.testArea;
-            
             testArea.addEventListener('touchstart', handleTouchStart, { passive: true });
             testArea.addEventListener('touchend', handleTouchEnd, { passive: true });
-            
-            // Also support mouse for testing on desktop
             testArea.addEventListener('mousedown', handleMouseDown);
             testArea.addEventListener('mouseup', handleMouseUp);
         }
@@ -633,23 +672,17 @@
             if (state.isProcessing) return;
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
-            touchStartTime = Date.now();
         }
         
         function handleTouchEnd(e) {
             if (state.isProcessing) return;
-            
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
-            
-            processSwipe(touchEndX - touchStartX, touchEndY - touchStartY);
+            processSwipe(e.changedTouches[0].clientX - touchStartX, e.changedTouches[0].clientY - touchStartY);
         }
         
         function handleMouseDown(e) {
             if (state.isProcessing) return;
             touchStartX = e.clientX;
             touchStartY = e.clientY;
-            touchStartTime = Date.now();
         }
         
         function handleMouseUp(e) {
@@ -658,37 +691,23 @@
         }
         
         function processSwipe(diffX, diffY) {
-            const absX = Math.abs(diffX);
-            const absY = Math.abs(diffY);
-            
-            // Check if it's a valid swipe
+            const absX = Math.abs(diffX), absY = Math.abs(diffY);
             if (Math.max(absX, absY) < CONFIG.SWIPE_THRESHOLD) return;
             
             let swipeDirection;
-            
             if (absX > absY) {
-                // Horizontal swipe
                 swipeDirection = diffX > 0 ? DIRECTIONS.RIGHT : DIRECTIONS.LEFT;
             } else {
-                // Vertical swipe
                 swipeDirection = diffY > 0 ? DIRECTIONS.DOWN : DIRECTIONS.UP;
             }
-            
             processResponse(swipeDirection);
         }
         
-        // =====================================================
-        // Response Processing
-        // =====================================================
-        
         function processResponse(userDirection) {
             state.isProcessing = true;
-            
             const isCorrect = (userDirection === state.currentDirection);
             
-            // Visual feedback
-            elements.feedbackBar.className = 'feedback-bar ' + 
-                (isCorrect ? 'correct' : 'incorrect');
+            elements.feedbackBar.className = 'feedback-bar ' + (isCorrect ? 'correct' : 'incorrect');
             elements.tumblingE.classList.add('processing');
             
             if (isCorrect) {
@@ -700,35 +719,26 @@
             
             state.trialOnLine++;
             
-            // Check stopping conditions
             if (state.consecutiveWrong >= CONFIG.MAX_WRONG_CONSECUTIVE && state.currentLine > 0) {
                 finishCurrentEye(state.currentLine - 1);
                 return;
             }
             
-            // Check if completed trials for this line
             if (state.trialOnLine >= CONFIG.TRIALS_PER_LINE) {
                 if (state.correctOnLine >= CONFIG.MIN_CORRECT_TO_PASS) {
-                    // Passed - move to smaller letters
                     state.currentLine++;
-                    
                     if (state.currentLine >= LOGMAR_VALUES.length) {
                         finishCurrentEye(LOGMAR_VALUES.length - 1);
                         return;
                     }
                 } else {
-                    // Failed this line
-                    const resultLine = state.currentLine > 0 ? state.currentLine - 1 : 0;
-                    finishCurrentEye(resultLine);
+                    finishCurrentEye(state.currentLine > 0 ? state.currentLine - 1 : 0);
                     return;
                 }
-                
-                // Reset for next line
                 state.trialOnLine = 0;
                 state.correctOnLine = 0;
             }
             
-            // Next trial after delay
             setTimeout(() => {
                 state.isProcessing = false;
                 elements.tumblingE.classList.remove('processing');
@@ -736,17 +746,11 @@
             }, CONFIG.FEEDBACK_DELAY);
         }
         
-        // =====================================================
-        // Test Completion
-        // =====================================================
-        
         function finishCurrentEye(finalLine) {
             const logMAR = LOGMAR_VALUES[finalLine];
             
             if (state.isRightEye) {
                 state.rightEyeLogMAR = logMAR;
-                
-                // Show transition modal
                 setTimeout(() => {
                     elements.transitionMessage.innerHTML = 
                         `Right Eye Result: ${SNELLEN_VALUES[finalLine]} (LogMAR ${logMAR.toFixed(1)})<br><br>` +
@@ -755,107 +759,80 @@
                 }, CONFIG.FEEDBACK_DELAY);
             } else {
                 state.leftEyeLogMAR = logMAR;
-                showResults();
+                showResultsAndSave();
             }
         }
         
-        // =====================================================
-        // Results Display
-        // =====================================================
+        function buildResultData() {
+            const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
+            const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
+            
+            return {
+                timestamp: new Date().toISOString(),
+                subject_id: state.subjectId,
+                right_eye_logmar: state.rightEyeLogMAR.toFixed(1),
+                right_eye_snellen: SNELLEN_VALUES[rightLine],
+                right_eye_decimal: Math.pow(10, -state.rightEyeLogMAR).toFixed(2),
+                left_eye_logmar: state.leftEyeLogMAR.toFixed(1),
+                left_eye_snellen: SNELLEN_VALUES[leftLine],
+                left_eye_decimal: Math.pow(10, -state.leftEyeLogMAR).toFixed(2)
+            };
+        }
         
-        function showResults() {
+        function showResultsAndSave() {
             showScreen('results');
             
-            const timestamp = new Date().toLocaleString();
+            document.getElementById('subjectIdDisplay').textContent = `Subject ID: ${state.subjectId}`;
             
-            document.getElementById('subjectIdDisplay').textContent = 
-                `Subject ID: ${state.subjectId}`;
-            
-            // Right eye
             if (state.rightEyeLogMAR >= 0) {
                 const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
-                const rightDecimal = Math.pow(10, -state.rightEyeLogMAR);
-                
-                document.getElementById('rightLogMAR').textContent = 
-                    `LogMAR: ${state.rightEyeLogMAR.toFixed(1)}`;
-                document.getElementById('rightSnellen').textContent = 
-                    `Snellen: ${SNELLEN_VALUES[rightLine]}`;
-                document.getElementById('rightDecimal').textContent = 
-                    `Decimal VA: ${rightDecimal.toFixed(2)}`;
+                document.getElementById('rightLogMAR').textContent = `LogMAR: ${state.rightEyeLogMAR.toFixed(1)}`;
+                document.getElementById('rightSnellen').textContent = `Snellen: ${SNELLEN_VALUES[rightLine]}`;
+                document.getElementById('rightDecimal').textContent = `Decimal VA: ${Math.pow(10, -state.rightEyeLogMAR).toFixed(2)}`;
             }
             
-            // Left eye
             if (state.leftEyeLogMAR >= 0) {
                 const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
-                const leftDecimal = Math.pow(10, -state.leftEyeLogMAR);
-                
-                document.getElementById('leftLogMAR').textContent = 
-                    `LogMAR: ${state.leftEyeLogMAR.toFixed(1)}`;
-                document.getElementById('leftSnellen').textContent = 
-                    `Snellen: ${SNELLEN_VALUES[leftLine]}`;
-                document.getElementById('leftDecimal').textContent = 
-                    `Decimal VA: ${leftDecimal.toFixed(2)}`;
+                document.getElementById('leftLogMAR').textContent = `LogMAR: ${state.leftEyeLogMAR.toFixed(1)}`;
+                document.getElementById('leftSnellen').textContent = `Snellen: ${SNELLEN_VALUES[leftLine]}`;
+                document.getElementById('leftDecimal').textContent = `Decimal VA: ${Math.pow(10, -state.leftEyeLogMAR).toFixed(2)}`;
             }
             
-            document.getElementById('timestamp').textContent = `Tested: ${timestamp}`;
+            document.getElementById('timestamp').textContent = `Tested: ${new Date().toLocaleString()}`;
+            
+            saveToBackend(buildResultData());
         }
         
         function getLineFromLogMAR(logMAR) {
             for (let i = 0; i < LOGMAR_VALUES.length; i++) {
-                if (Math.abs(LOGMAR_VALUES[i] - logMAR) < 0.05) {
-                    return i;
-                }
+                if (Math.abs(LOGMAR_VALUES[i] - logMAR) < 0.05) return i;
             }
             return 0;
         }
         
-        // =====================================================
-        // Share Functionality
-        // =====================================================
-        
         function shareResults() {
             const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
             const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
-            const rightDecimal = Math.pow(10, -state.rightEyeLogMAR);
-            const leftDecimal = Math.pow(10, -state.leftEyeLogMAR);
             
-            const shareText = 
-`EyeScopeAI Vision Test Results
-==============================
-Subject ID: ${state.subjectId}
-Date/Time: ${new Date().toLocaleString()}
+            const shareText = `EyeScopeAI Results
+Subject: ${state.subjectId}
+Date: ${new Date().toLocaleString()}
 
-RIGHT EYE (OD):
-  LogMAR: ${state.rightEyeLogMAR.toFixed(1)}
-  Snellen: ${SNELLEN_VALUES[rightLine]}
-  Decimal VA: ${rightDecimal.toFixed(2)}
+RIGHT EYE (OD): ${SNELLEN_VALUES[rightLine]} | LogMAR ${state.rightEyeLogMAR.toFixed(1)}
+LEFT EYE (OS): ${SNELLEN_VALUES[leftLine]} | LogMAR ${state.leftEyeLogMAR.toFixed(1)}
 
-LEFT EYE (OS):
-  LogMAR: ${state.leftEyeLogMAR.toFixed(1)}
-  Snellen: ${SNELLEN_VALUES[leftLine]}
-  Decimal VA: ${leftDecimal.toFixed(2)}
-
-Note: Results for screening purposes only.
-Refer to ophthalmologist for clinical evaluation.`;
+Screening only - refer to ophthalmologist.`;
             
             if (navigator.share) {
-                navigator.share({
-                    title: 'EyeScopeAI Results',
-                    text: shareText
-                }).catch(console.error);
+                navigator.share({ title: 'EyeScopeAI Results', text: shareText }).catch(console.error);
             } else {
-                // Fallback: copy to clipboard
-                navigator.clipboard.writeText(shareText).then(() => {
-                    alert('Results copied to clipboard!');
-                }).catch(() => {
-                    alert(shareText);
-                });
+                navigator.clipboard.writeText(shareText).then(() => alert('Results copied!')).catch(() => alert(shareText));
             }
         }
         
-        // =====================================================
-        // Prevent accidental navigation
-        // =====================================================
+        updateOnlineStatus();
+        updatePendingBadge();
+        if (navigator.onLine) syncPendingData();
         
         window.addEventListener('beforeunload', (e) => {
             if (screens.test.classList.contains('active')) {
@@ -864,10 +841,9 @@ Refer to ophthalmologist for clinical evaluation.`;
             }
         });
         
-        // Prevent zoom on double tap
         document.addEventListener('dblclick', (e) => e.preventDefault());
         
-        console.log('EyeScopeAI v1.0.0-alpha initialized');
+        console.log('EyeScopeAI v1.1.0 with backend sync');
     </script>
 </body>
 </html>
