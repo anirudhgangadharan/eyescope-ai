@@ -31,7 +31,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: white;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
             user-select: none;
             -webkit-user-select: none;
         }
@@ -47,6 +47,7 @@
             display: flex;
         }
         
+        /* Home Screen */
         #homeScreen {
             justify-content: center;
             align-items: center;
@@ -66,7 +67,24 @@
         .subtitle {
             font-size: 16px;
             color: var(--gray);
-            margin-bottom: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .calibration-status {
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .calibration-status.calibrated {
+            background: #E8F5E9;
+            color: var(--success);
+        }
+        
+        .calibration-status.not-calibrated {
+            background: #FFF3E0;
+            color: var(--accent);
         }
         
         .card {
@@ -130,13 +148,16 @@
             transition: transform 0.1s, opacity 0.2s;
             width: 100%;
             max-width: 400px;
+            margin-bottom: 12px;
         }
         
         .btn:active { transform: scale(0.98); }
         .btn-primary { background: var(--primary); color: white; }
         .btn-accent { background: var(--accent); color: white; }
         .btn-success { background: var(--success); color: white; }
+        .btn-outline { background: white; color: var(--primary); border: 2px solid var(--primary); }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-small { padding: 12px 24px; font-size: 16px; }
         
         .version {
             font-size: 12px;
@@ -154,6 +175,141 @@
         .sync-status.online { background: #E8F5E9; color: var(--success); }
         .sync-status.offline { background: #FFF3E0; color: var(--accent); }
         
+        /* Calibration Screen */
+        #calibrationScreen {
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .calibration-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        
+        .calibration-instruction {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 24px;
+            max-width: 320px;
+        }
+        
+        .calibration-box-container {
+            position: relative;
+            margin: 24px 0;
+        }
+        
+        .calibration-box {
+            border: 3px solid var(--primary);
+            background: rgba(21, 101, 192, 0.1);
+            transition: width 0.1s, height 0.1s;
+        }
+        
+        .calibration-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+            color: var(--primary-dark);
+            font-weight: bold;
+        }
+        
+        .calibration-controls {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            align-items: center;
+        }
+        
+        .calibration-controls button {
+            width: 60px;
+            height: 60px;
+            font-size: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        .calibration-controls button:active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .calibration-size {
+            font-size: 18px;
+            color: var(--primary-dark);
+            min-width: 80px;
+        }
+        
+        .calibration-hint {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+        
+        /* Distance Screen */
+        #distanceScreen {
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            text-align: center;
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+        }
+        
+        .distance-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+        }
+        
+        .distance-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+        }
+        
+        .distance-value {
+            font-size: 72px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .distance-instruction {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 32px;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+        
+        .distance-tips {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 32px;
+            max-width: 320px;
+            text-align: left;
+        }
+        
+        .distance-tips h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .distance-tips li {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        
+        /* Test Screen */
         #testScreen { background: white; }
         
         .test-header {
@@ -188,10 +344,10 @@
         }
         
         .tumbling-e {
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
+            font-family: 'Arial Black', 'Arial', sans-serif;
+            font-weight: 900;
             color: black;
-            transition: font-size 0.3s, transform 0.1s;
+            transition: transform 0.1s;
             line-height: 1;
         }
         
@@ -224,6 +380,7 @@
         .feedback-bar.correct { background: var(--success); }
         .feedback-bar.incorrect { background: var(--error); }
         
+        /* Results Screen */
         #resultsScreen {
             justify-content: center;
             align-items: center;
@@ -288,6 +445,7 @@
         .save-status.error { background: #FFEBEE; color: var(--error); }
         .save-status.queued { background: #FFF3E0; color: var(--accent); }
         
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -332,6 +490,7 @@
             border-radius: 12px;
             font-size: 12px;
             display: none;
+            z-index: 100;
         }
         
         .pending-badge.show { display: block; }
@@ -340,19 +499,23 @@
 <body>
     <div id="pendingBadge" class="pending-badge"></div>
 
+    <!-- Home Screen -->
     <div id="homeScreen" class="screen active">
         <div class="logo">👁️</div>
         <div class="title">EyeScopeAI</div>
         <div class="subtitle">Vision Screening Tool</div>
         
+        <div id="calibrationStatus" class="calibration-status not-calibrated">
+            ⚠️ Screen not calibrated
+        </div>
+        
         <div class="card">
             <h3>📋 Instructions</h3>
             <ol>
-                <li>Hold phone at arm's length (~40cm)</li>
+                <li>Calibrate screen first (one-time)</li>
+                <li>Hold phone at 40cm distance</li>
                 <li>Cover one eye</li>
-                <li>Swipe in the direction the E is pointing</li>
-                <li>Test progresses to smaller letters</li>
-                <li>Test ends when you cannot see clearly</li>
+                <li>Swipe direction the E points</li>
             </ol>
         </div>
         
@@ -362,11 +525,61 @@
         </div>
         
         <button class="btn btn-primary" onclick="startTest()">Start Vision Test</button>
+        <button class="btn btn-outline" onclick="showCalibration()">📐 Calibrate Screen</button>
         
-        <div class="version">v1.1.0 | ICMR STS 2025</div>
-        <div id="syncStatus" class="sync-status online">● Online - Data will sync</div>
+        <div class="version">v1.2.0 | ICMR STS 2025</div>
+        <div id="syncStatus" class="sync-status online">● Online</div>
     </div>
     
+    <!-- Calibration Screen -->
+    <div id="calibrationScreen" class="screen">
+        <div class="calibration-title">📐 Screen Calibration</div>
+        <div class="calibration-instruction">
+            Place your <strong>3cm × 3cm</strong> card on the box below and adjust until it matches exactly.
+        </div>
+        
+        <div class="calibration-box-container">
+            <div id="calibrationBox" class="calibration-box"></div>
+            <div class="calibration-label">3 × 3 cm</div>
+        </div>
+        
+        <div class="calibration-controls">
+            <button onclick="adjustCalibration(-5)">−</button>
+            <div class="calibration-size" id="calibrationSize">100 px</div>
+            <button onclick="adjustCalibration(5)">+</button>
+        </div>
+        
+        <div class="calibration-hint">
+            Adjust until the box matches your card perfectly
+        </div>
+        
+        <button class="btn btn-success" onclick="saveCalibration()">✓ Done - Save Calibration</button>
+        <button class="btn btn-outline btn-small" onclick="showScreen('home')">Cancel</button>
+    </div>
+    
+    <!-- Distance Instruction Screen -->
+    <div id="distanceScreen" class="screen">
+        <div class="distance-icon">📏</div>
+        <div class="distance-title">Testing Distance</div>
+        <div class="distance-value">40 cm</div>
+        <div class="distance-instruction">
+            Hold the phone at <strong>arm's length</strong> (40cm from eyes). Use a string or ruler to measure.
+        </div>
+        
+        <div class="distance-tips">
+            <h4>💡 Tips</h4>
+            <ul>
+                <li>Keep phone still during test</li>
+                <li>Ensure good lighting</li>
+                <li>Cover one eye completely</li>
+                <li>No squinting allowed</li>
+            </ul>
+        </div>
+        
+        <button class="btn btn-primary" onclick="beginTest()">I'm Ready - Start Test</button>
+    </div>
+    
+    <!-- Test Screen -->
     <div id="testScreen" class="screen">
         <div class="test-header">
             <span class="eye-indicator" id="eyeIndicator">Right Eye (OD)</span>
@@ -374,7 +587,7 @@
         </div>
         
         <div class="acuity-display" id="acuityDisplay">
-            LogMAR: 1.0 | Snellen: 6/60 | Decimal: 0.10
+            LogMAR: 1.0 | Snellen: 6/60
         </div>
         
         <div class="test-area" id="testArea">
@@ -389,6 +602,7 @@
         <div class="feedback-bar" id="feedbackBar"></div>
     </div>
     
+    <!-- Results Screen -->
     <div id="resultsScreen" class="screen">
         <div class="check-icon">✓</div>
         <div class="title">Test Complete</div>
@@ -423,33 +637,72 @@
         </div>
     </div>
     
+    <!-- Eye Transition Modal -->
     <div id="transitionModal" class="modal">
         <div class="modal-content">
             <h3>Right Eye Complete</h3>
-            <p id="transitionMessage">Right Eye Result: 6/60 (LogMAR 1.0)<br><br>Now cover your RIGHT eye for LEFT eye test.</p>
+            <p id="transitionMessage">Now cover your RIGHT eye for LEFT eye test.</p>
             <button class="btn btn-primary" onclick="continueToLeftEye()">Continue</button>
         </div>
     </div>
 
     <script>
+        // =====================================================
+        // EyeScopeAI v1.2.0
+        // With Calibration & Proper Optotype Sizing
+        // =====================================================
+        
         const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyPQ_ajsygSEIVsVcl_oRTij7iXISbeRc-BPUt3se5or8vFNeuwQ60g9IE1NQ8W1dcrqw/exec';
         const STORAGE_KEY = 'eyescopeai_pending';
+        const CALIBRATION_KEY = 'eyescopeai_calibration';
         
+        // Test Configuration
         const CONFIG = {
             MAX_WRONG_CONSECUTIVE: 2,
             TRIALS_PER_LINE: 3,
             MIN_CORRECT_TO_PASS: 2,
-            BASE_SIZE_VW: 45,
             FEEDBACK_DELAY: 400,
-            SWIPE_THRESHOLD: 50
+            SWIPE_THRESHOLD: 50,
+            TEST_DISTANCE_CM: 40,
+            CALIBRATION_CARD_CM: 3
         };
         
+        // LogMAR Scale (11 lines: 1.0 to 0.0)
+        // Optotype size in mm at 40cm for each LogMAR level
+        // Formula: size = 5 * tan(5 * 10^LogMAR * π / 10800) * distance * 10
+        // At LogMAR 1.0, 40cm: ~29.1mm (for 5 strokes)
+        // At LogMAR 0.0, 40cm: ~2.91mm
         const LOGMAR_VALUES = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0];
         const SNELLEN_VALUES = ['6/60', '6/48', '6/38', '6/30', '6/24', '6/19', '6/15', '6/12', '6/9.5', '6/7.5', '6/6'];
+        
+        // Optotype HEIGHT in mm at 40cm distance for each LogMAR level
+        // LogMAR 1.0 = 29.1mm, each step down = divide by 1.2589
+        const OPTOTYPE_SIZE_MM = [
+            29.1,   // LogMAR 1.0
+            23.1,   // LogMAR 0.9
+            18.4,   // LogMAR 0.8
+            14.6,   // LogMAR 0.7
+            11.6,   // LogMAR 0.6
+            9.2,    // LogMAR 0.5
+            7.3,    // LogMAR 0.4
+            5.8,    // LogMAR 0.3
+            4.6,    // LogMAR 0.2
+            3.7,    // LogMAR 0.1
+            2.9     // LogMAR 0.0
+        ];
         
         const DIRECTIONS = { RIGHT: 0, UP: 90, LEFT: 180, DOWN: 270 };
         const DIR_ARRAY = [0, 90, 180, 270];
         
+        // Calibration State
+        let calibration = {
+            pixelsPerCm: null,
+            calibrationBoxPx: 100,
+            deviceModel: navigator.userAgent,
+            calibratedAt: null
+        };
+        
+        // Test State
         let state = {
             subjectId: '',
             isRightEye: true,
@@ -466,14 +719,20 @@
         
         let touchStartX = 0, touchStartY = 0;
         
+        // DOM Elements
         const screens = {
             home: document.getElementById('homeScreen'),
+            calibration: document.getElementById('calibrationScreen'),
+            distance: document.getElementById('distanceScreen'),
             test: document.getElementById('testScreen'),
             results: document.getElementById('resultsScreen')
         };
         
         const elements = {
             subjectIdInput: document.getElementById('subjectId'),
+            calibrationStatus: document.getElementById('calibrationStatus'),
+            calibrationBox: document.getElementById('calibrationBox'),
+            calibrationSize: document.getElementById('calibrationSize'),
             eyeIndicator: document.getElementById('eyeIndicator'),
             progressText: document.getElementById('progressText'),
             acuityDisplay: document.getElementById('acuityDisplay'),
@@ -488,105 +747,67 @@
             pendingBadge: document.getElementById('pendingBadge')
         };
         
-        function updateOnlineStatus() {
-            const isOnline = navigator.onLine;
-            elements.syncStatus.className = 'sync-status ' + (isOnline ? 'online' : 'offline');
-            elements.syncStatus.textContent = isOnline ? '● Online - Data will sync' : '● Offline - Data saved locally';
-            if (isOnline) syncPendingData();
-        }
+        // =====================================================
+        // Calibration Functions
+        // =====================================================
         
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-        
-        function getPendingData() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-            catch { return []; }
-        }
-        
-        function savePendingData(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            updatePendingBadge();
-        }
-        
-        function updatePendingBadge() {
-            const pending = getPendingData();
-            if (pending.length > 0) {
-                elements.pendingBadge.textContent = `${pending.length} pending`;
-                elements.pendingBadge.classList.add('show');
-            } else {
-                elements.pendingBadge.classList.remove('show');
-            }
-        }
-        
-        async function saveToBackend(data) {
-            elements.saveStatus.className = 'save-status saving';
-            elements.saveStatus.textContent = '⏳ Saving to database...';
-            elements.retryBtn.style.display = 'none';
-            
-            const pending = getPendingData();
-            const dataWithId = { ...data, _tempId: Date.now() };
-            pending.push(dataWithId);
-            savePendingData(pending);
-            
-            if (!navigator.onLine) {
-                elements.saveStatus.className = 'save-status queued';
-                elements.saveStatus.textContent = '📱 Saved offline - will sync when online';
-                return;
-            }
-            
+        function loadCalibration() {
             try {
-                await fetch(BACKEND_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                
-                const updatedPending = getPendingData().filter(d => d._tempId !== dataWithId._tempId);
-                savePendingData(updatedPending);
-                
-                elements.saveStatus.className = 'save-status saved';
-                elements.saveStatus.textContent = '✓ Saved to database';
-            } catch (error) {
-                console.error('Save error:', error);
-                elements.saveStatus.className = 'save-status error';
-                elements.saveStatus.textContent = '⚠ Save failed - stored locally';
-                elements.retryBtn.style.display = 'block';
-            }
-        }
-        
-        async function syncPendingData() {
-            const pending = getPendingData();
-            if (pending.length === 0) return;
-            
-            for (const data of pending) {
-                try {
-                    await fetch(BACKEND_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                    
-                    const updated = getPendingData().filter(d => d._tempId !== data._tempId);
-                    savePendingData(updated);
-                } catch (error) {
-                    console.error('Sync error:', error);
-                    break;
+                const saved = localStorage.getItem(CALIBRATION_KEY);
+                if (saved) {
+                    calibration = JSON.parse(saved);
+                    updateCalibrationStatus();
+                    return true;
                 }
+            } catch (e) {
+                console.error('Error loading calibration:', e);
             }
-            updatePendingBadge();
+            return false;
         }
         
-        function retrySync() {
-            if (navigator.onLine) {
-                syncPendingData();
-                const data = buildResultData();
-                saveToBackend(data);
+        function saveCalibration() {
+            // Calculate pixels per cm based on box size
+            calibration.pixelsPerCm = calibration.calibrationBoxPx / CONFIG.CALIBRATION_CARD_CM;
+            calibration.calibratedAt = new Date().toISOString();
+            calibration.deviceModel = navigator.userAgent;
+            
+            localStorage.setItem(CALIBRATION_KEY, JSON.stringify(calibration));
+            updateCalibrationStatus();
+            showScreen('home');
+            
+            console.log('Calibration saved:', calibration.pixelsPerCm, 'px/cm');
+        }
+        
+        function updateCalibrationStatus() {
+            if (calibration.pixelsPerCm) {
+                elements.calibrationStatus.className = 'calibration-status calibrated';
+                elements.calibrationStatus.textContent = `✓ Calibrated (${calibration.pixelsPerCm.toFixed(1)} px/cm)`;
             } else {
-                alert('Still offline. Data is saved locally and will sync automatically when online.');
+                elements.calibrationStatus.className = 'calibration-status not-calibrated';
+                elements.calibrationStatus.textContent = '⚠️ Screen not calibrated';
             }
         }
+        
+        function showCalibration() {
+            showScreen('calibration');
+            updateCalibrationBox();
+        }
+        
+        function adjustCalibration(delta) {
+            calibration.calibrationBoxPx = Math.max(50, Math.min(300, calibration.calibrationBoxPx + delta));
+            updateCalibrationBox();
+        }
+        
+        function updateCalibrationBox() {
+            const size = calibration.calibrationBoxPx;
+            elements.calibrationBox.style.width = size + 'px';
+            elements.calibrationBox.style.height = size + 'px';
+            elements.calibrationSize.textContent = size + ' px';
+        }
+        
+        // =====================================================
+        // Screen Management
+        // =====================================================
         
         function showScreen(screenName) {
             Object.values(screens).forEach(s => s.classList.remove('active'));
@@ -596,6 +817,10 @@
         function showModal(show) {
             elements.transitionModal.classList.toggle('active', show);
         }
+        
+        // =====================================================
+        // Test Flow
+        // =====================================================
         
         function startTest() {
             const subjectId = elements.subjectIdInput.value.trim();
@@ -607,10 +832,24 @@
                 return;
             }
             
+            if (!calibration.pixelsPerCm) {
+                if (!confirm('Screen not calibrated. Results may be inaccurate. Continue anyway?')) {
+                    showCalibration();
+                    return;
+                }
+                // Use default estimate (assume ~38 px/cm for typical phones)
+                calibration.pixelsPerCm = 38;
+            }
+            
             elements.subjectIdInput.classList.remove('required-field');
             state.subjectId = subjectId;
             state.testStartTime = new Date();
             
+            // Show distance instruction
+            showScreen('distance');
+        }
+        
+        function beginTest() {
             resetTestState();
             state.isRightEye = true;
             
@@ -641,26 +880,49 @@
             showScreen('home');
         }
         
+        // =====================================================
+        // Optotype Sizing (Calibrated)
+        // =====================================================
+        
+        function getOptotypeSizePx(lineIndex) {
+            const sizeMm = OPTOTYPE_SIZE_MM[lineIndex];
+            const sizeCm = sizeMm / 10;
+            const sizePx = sizeCm * calibration.pixelsPerCm;
+            return sizePx;
+        }
+        
+        // =====================================================
+        // Trial Presentation
+        // =====================================================
+        
         function presentNextTrial() {
             elements.eyeIndicator.textContent = state.isRightEye ? 'Right Eye (OD)' : 'Left Eye (OS)';
             elements.progressText.textContent = `Line ${state.currentLine + 1}/${LOGMAR_VALUES.length} | Trial ${state.trialOnLine + 1}/${CONFIG.TRIALS_PER_LINE}`;
             
             const currentLogMAR = LOGMAR_VALUES[state.currentLine];
-            const decimalVA = Math.pow(10, -currentLogMAR);
-            elements.acuityDisplay.textContent = `LogMAR: ${currentLogMAR.toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]} | Decimal: ${decimalVA.toFixed(2)}`;
+            elements.acuityDisplay.textContent = `LogMAR: ${currentLogMAR.toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]}`;
             
             state.currentDirection = DIR_ARRAY[Math.floor(Math.random() * 4)];
             
-            const sizeMultiplier = Math.pow(1.2589, state.currentLine);
-            const currentSizeVW = CONFIG.BASE_SIZE_VW / sizeMultiplier;
+            // Get calibrated size
+            const sizePx = getOptotypeSizePx(state.currentLine);
             
-            elements.tumblingE.style.fontSize = `${currentSizeVW}vw`;
+            elements.tumblingE.style.fontSize = sizePx + 'px';
             elements.tumblingE.style.transform = `rotate(${-state.currentDirection}deg)`;
             
             elements.feedbackBar.className = 'feedback-bar';
         }
         
+        // =====================================================
+        // Touch/Swipe Detection
+        // =====================================================
+        
+        let touchListenersAdded = false;
+        
         function setupTouchListeners() {
+            if (touchListenersAdded) return;
+            touchListenersAdded = true;
+            
             const testArea = elements.testArea;
             testArea.addEventListener('touchstart', handleTouchStart, { passive: true });
             testArea.addEventListener('touchend', handleTouchEnd, { passive: true });
@@ -702,6 +964,10 @@
             }
             processResponse(swipeDirection);
         }
+        
+        // =====================================================
+        // Response Processing
+        // =====================================================
         
         function processResponse(userDirection) {
             state.isProcessing = true;
@@ -746,6 +1012,10 @@
             }, CONFIG.FEEDBACK_DELAY);
         }
         
+        // =====================================================
+        // Test Completion
+        // =====================================================
+        
         function finishCurrentEye(finalLine) {
             const logMAR = LOGMAR_VALUES[finalLine];
             
@@ -753,7 +1023,7 @@
                 state.rightEyeLogMAR = logMAR;
                 setTimeout(() => {
                     elements.transitionMessage.innerHTML = 
-                        `Right Eye Result: ${SNELLEN_VALUES[finalLine]} (LogMAR ${logMAR.toFixed(1)})<br><br>` +
+                        `Right Eye: <strong>${SNELLEN_VALUES[finalLine]}</strong> (LogMAR ${logMAR.toFixed(1)})<br><br>` +
                         `Now cover your <strong>RIGHT</strong> eye for <strong>LEFT</strong> eye test.`;
                     showModal(true);
                 }, CONFIG.FEEDBACK_DELAY);
@@ -762,6 +1032,10 @@
                 showResultsAndSave();
             }
         }
+        
+        // =====================================================
+        // Data & Backend
+        // =====================================================
         
         function buildResultData() {
             const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
@@ -775,9 +1049,125 @@
                 right_eye_decimal: Math.pow(10, -state.rightEyeLogMAR).toFixed(2),
                 left_eye_logmar: state.leftEyeLogMAR.toFixed(1),
                 left_eye_snellen: SNELLEN_VALUES[leftLine],
-                left_eye_decimal: Math.pow(10, -state.leftEyeLogMAR).toFixed(2)
+                left_eye_decimal: Math.pow(10, -state.leftEyeLogMAR).toFixed(2),
+                test_distance_cm: CONFIG.TEST_DISTANCE_CM,
+                screen_ppi: calibration.pixelsPerCm ? (calibration.pixelsPerCm * 2.54).toFixed(1) : 'uncalibrated',
+                device_info: navigator.userAgent.substring(0, 100)
             };
         }
+        
+        function getLineFromLogMAR(logMAR) {
+            for (let i = 0; i < LOGMAR_VALUES.length; i++) {
+                if (Math.abs(LOGMAR_VALUES[i] - logMAR) < 0.05) return i;
+            }
+            return 0;
+        }
+        
+        // =====================================================
+        // Backend Sync
+        // =====================================================
+        
+        function updateOnlineStatus() {
+            const isOnline = navigator.onLine;
+            elements.syncStatus.className = 'sync-status ' + (isOnline ? 'online' : 'offline');
+            elements.syncStatus.textContent = isOnline ? '● Online' : '● Offline';
+            if (isOnline) syncPendingData();
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        
+        function getPendingData() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+            catch { return []; }
+        }
+        
+        function savePendingData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            updatePendingBadge();
+        }
+        
+        function updatePendingBadge() {
+            const pending = getPendingData();
+            if (pending.length > 0) {
+                elements.pendingBadge.textContent = `${pending.length} pending`;
+                elements.pendingBadge.classList.add('show');
+            } else {
+                elements.pendingBadge.classList.remove('show');
+            }
+        }
+        
+        async function saveToBackend(data) {
+            elements.saveStatus.className = 'save-status saving';
+            elements.saveStatus.textContent = '⏳ Saving...';
+            elements.retryBtn.style.display = 'none';
+            
+            const pending = getPendingData();
+            const dataWithId = { ...data, _tempId: Date.now() };
+            pending.push(dataWithId);
+            savePendingData(pending);
+            
+            if (!navigator.onLine) {
+                elements.saveStatus.className = 'save-status queued';
+                elements.saveStatus.textContent = '📱 Saved offline';
+                return;
+            }
+            
+            try {
+                await fetch(BACKEND_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const updatedPending = getPendingData().filter(d => d._tempId !== dataWithId._tempId);
+                savePendingData(updatedPending);
+                
+                elements.saveStatus.className = 'save-status saved';
+                elements.saveStatus.textContent = '✓ Saved';
+            } catch (error) {
+                console.error('Save error:', error);
+                elements.saveStatus.className = 'save-status error';
+                elements.saveStatus.textContent = '⚠ Save failed - stored locally';
+                elements.retryBtn.style.display = 'block';
+            }
+        }
+        
+        async function syncPendingData() {
+            const pending = getPendingData();
+            if (pending.length === 0) return;
+            
+            for (const data of pending) {
+                try {
+                    await fetch(BACKEND_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const updated = getPendingData().filter(d => d._tempId !== data._tempId);
+                    savePendingData(updated);
+                } catch (error) {
+                    break;
+                }
+            }
+            updatePendingBadge();
+        }
+        
+        function retrySync() {
+            if (navigator.onLine) {
+                syncPendingData();
+                saveToBackend(buildResultData());
+            } else {
+                alert('Still offline. Data saved locally.');
+            }
+        }
+        
+        // =====================================================
+        // Results Display
+        // =====================================================
         
         function showResultsAndSave() {
             showScreen('results');
@@ -803,12 +1193,9 @@
             saveToBackend(buildResultData());
         }
         
-        function getLineFromLogMAR(logMAR) {
-            for (let i = 0; i < LOGMAR_VALUES.length; i++) {
-                if (Math.abs(LOGMAR_VALUES[i] - logMAR) < 0.05) return i;
-            }
-            return 0;
-        }
+        // =====================================================
+        // Share
+        // =====================================================
         
         function shareResults() {
             const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
@@ -818,20 +1205,26 @@
 Subject: ${state.subjectId}
 Date: ${new Date().toLocaleString()}
 
-RIGHT EYE (OD): ${SNELLEN_VALUES[rightLine]} | LogMAR ${state.rightEyeLogMAR.toFixed(1)}
-LEFT EYE (OS): ${SNELLEN_VALUES[leftLine]} | LogMAR ${state.leftEyeLogMAR.toFixed(1)}
+OD (Right): ${SNELLEN_VALUES[rightLine]} | LogMAR ${state.rightEyeLogMAR.toFixed(1)}
+OS (Left): ${SNELLEN_VALUES[leftLine]} | LogMAR ${state.leftEyeLogMAR.toFixed(1)}
 
-Screening only - refer to ophthalmologist.`;
+Distance: ${CONFIG.TEST_DISTANCE_CM}cm | Calibrated: ${calibration.pixelsPerCm ? 'Yes' : 'No'}`;
             
             if (navigator.share) {
-                navigator.share({ title: 'EyeScopeAI Results', text: shareText }).catch(console.error);
+                navigator.share({ title: 'EyeScopeAI', text: shareText }).catch(console.error);
             } else {
-                navigator.clipboard.writeText(shareText).then(() => alert('Results copied!')).catch(() => alert(shareText));
+                navigator.clipboard.writeText(shareText).then(() => alert('Copied!')).catch(() => alert(shareText));
             }
         }
         
+        // =====================================================
+        // Init
+        // =====================================================
+        
+        loadCalibration();
         updateOnlineStatus();
         updatePendingBadge();
+        updateCalibrationBox();
         if (navigator.onLine) syncPendingData();
         
         window.addEventListener('beforeunload', (e) => {
@@ -843,7 +1236,7 @@ Screening only - refer to ophthalmologist.`;
         
         document.addEventListener('dblclick', (e) => e.preventDefault());
         
-        console.log('EyeScopeAI v1.1.0 with backend sync');
+        console.log('EyeScopeAI v1.2.0 - Calibrated Vision Screening');
     </script>
 </body>
 </html>
