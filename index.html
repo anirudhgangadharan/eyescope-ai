@@ -336,22 +336,20 @@
         }
         
         .landolt-c {
-            border-radius: 50%;
-            border: solid black;
             position: relative;
-            background: white;
+            border-radius: 50%;
+            background: radial-gradient(circle, white 0%, white 50%, black 50%, black 100%);
         }
         
-        .landolt-c::after {
-            content: '';
+        .landolt-c .gap {
             position: absolute;
             background: white;
         }
         
-        .landolt-c.gap-right::after { right: -1px; top: 50%; transform: translateY(-50%); width: 30%; height: 20%; }
-        .landolt-c.gap-left::after { left: -1px; top: 50%; transform: translateY(-50%); width: 30%; height: 20%; }
-        .landolt-c.gap-up::after { top: -1px; left: 50%; transform: translateX(-50%); width: 20%; height: 30%; }
-        .landolt-c.gap-down::after { bottom: -1px; left: 50%; transform: translateX(-50%); width: 20%; height: 30%; }
+        .landolt-c.gap-right .gap { right: 0; top: 35%; width: 55%; height: 30%; }
+        .landolt-c.gap-left .gap { left: 0; top: 35%; width: 55%; height: 30%; }
+        .landolt-c.gap-up .gap { top: 0; left: 35%; width: 30%; height: 55%; }
+        .landolt-c.gap-down .gap { bottom: 0; left: 35%; width: 30%; height: 55%; }
         
         .direction-hint {
             position: absolute;
@@ -855,33 +853,48 @@
         }
         
         // Sizing
+        // Font size compensation: fontSize doesn't equal character height
+        // For Arial Black, cap height is ~0.72 of font size
+        // So we divide by 0.72 to get correct physical height
+        const FONT_CAP_HEIGHT_RATIO = 0.72;
+        
         function getOptotypeSizePx(lineIndex) {
             const sizeMm = OPTOTYPE_SIZE_MM[lineIndex];
-            return (sizeMm / 10) * calibration.pixelsPerCm;
+            const targetSizePx = (sizeMm / 10) * calibration.pixelsPerCm;
+            return targetSizePx; // For Landolt C (direct width/height)
+        }
+        
+        function getFontSizePx(lineIndex) {
+            const sizeMm = OPTOTYPE_SIZE_MM[lineIndex];
+            const targetHeightPx = (sizeMm / 10) * calibration.pixelsPerCm;
+            // Compensate for font cap height ratio
+            return targetHeightPx / FONT_CAP_HEIGHT_RATIO;
         }
         
         // Trial Presentation
         function presentNextTrial() {
             elements.eyeIndicator.textContent = state.isRightEye ? 'Right Eye (OD)' : 'Left Eye (OS)';
             elements.progressText.textContent = `Line ${state.currentLine + 1}/${LOGMAR_VALUES.length} | Trial ${state.trialOnLine + 1}/${CONFIG.TRIALS_PER_LINE}`;
-            elements.acuityDisplay.textContent = `LogMAR: ${LOGMAR_VALUES[state.currentLine].toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]}`;
+            
+            const targetMm = OPTOTYPE_SIZE_MM[state.currentLine];
+            elements.acuityDisplay.textContent = `LogMAR: ${LOGMAR_VALUES[state.currentLine].toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]} | Target: ${targetMm}mm`;
             
             state.currentDirection = DIR_ARRAY[Math.floor(Math.random() * 4)];
-            const sizePx = getOptotypeSizePx(state.currentLine);
             
             if (selectedOptotype === 'E') {
+                const fontSizePx = getFontSizePx(state.currentLine);
                 elements.tumblingE.style.display = 'block';
                 elements.landoltC.style.display = 'none';
-                elements.tumblingE.style.fontSize = sizePx + 'px';
+                elements.tumblingE.style.fontSize = fontSizePx + 'px';
                 elements.tumblingE.style.transform = `rotate(${-state.currentDirection}deg)`;
             } else {
+                const sizePx = getOptotypeSizePx(state.currentLine);
                 elements.tumblingE.style.display = 'none';
                 elements.landoltC.style.display = 'block';
-                const borderWidth = Math.max(2, sizePx / 5);
                 elements.landoltC.style.width = sizePx + 'px';
                 elements.landoltC.style.height = sizePx + 'px';
-                elements.landoltC.style.borderWidth = borderWidth + 'px';
                 elements.landoltC.className = 'landolt-c gap-' + DIR_NAMES[state.currentDirection];
+                elements.landoltC.innerHTML = '<div class="gap"></div>';
             }
             
             elements.feedbackBar.className = 'feedback-bar';
