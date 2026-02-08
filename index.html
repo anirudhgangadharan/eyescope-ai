@@ -43,11 +43,8 @@
             flex-direction: column;
         }
         
-        .screen.active {
-            display: flex;
-        }
+        .screen.active { display: flex; }
         
-        /* Home Screen */
         #homeScreen {
             justify-content: center;
             align-items: center;
@@ -77,15 +74,8 @@
             margin-bottom: 24px;
         }
         
-        .calibration-status.calibrated {
-            background: #E8F5E9;
-            color: var(--success);
-        }
-        
-        .calibration-status.not-calibrated {
-            background: #FFF3E0;
-            color: var(--accent);
-        }
+        .calibration-status.calibrated { background: #E8F5E9; color: var(--success); }
+        .calibration-status.not-calibrated { background: #FFF3E0; color: var(--accent); }
         
         .card {
             background: white;
@@ -98,18 +88,8 @@
             text-align: left;
         }
         
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        
-        .card p, .card li {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #333;
-        }
-        
+        .card h3 { color: var(--primary); margin-bottom: 12px; font-size: 18px; }
+        .card p, .card li { font-size: 14px; line-height: 1.6; color: #333; }
         .card ol { padding-left: 20px; }
         
         .input-group {
@@ -132,7 +112,6 @@
             border-radius: 8px;
             font-size: 16px;
             outline: none;
-            transition: border-color 0.2s;
         }
         
         .input-group input:focus { border-color: var(--primary); }
@@ -145,7 +124,6 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.1s, opacity 0.2s;
             width: 100%;
             max-width: 400px;
             margin-bottom: 12px;
@@ -156,14 +134,9 @@
         .btn-accent { background: var(--accent); color: white; }
         .btn-success { background: var(--success); color: white; }
         .btn-outline { background: white; color: var(--primary); border: 2px solid var(--primary); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-small { padding: 12px 24px; font-size: 16px; }
         
-        .version {
-            font-size: 12px;
-            color: var(--gray);
-            margin-top: 24px;
-        }
+        .version { font-size: 12px; color: var(--gray); margin-top: 24px; }
         
         .sync-status {
             font-size: 12px;
@@ -174,6 +147,65 @@
         
         .sync-status.online { background: #E8F5E9; color: var(--success); }
         .sync-status.offline { background: #FFF3E0; color: var(--accent); }
+        
+        /* Optotype Selector */
+        .optotype-selector {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 24px;
+        }
+        
+        .optotype-selector label {
+            display: block;
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+        
+        .optotype-options { display: flex; gap: 12px; }
+        
+        .optotype-option {
+            flex: 1;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .optotype-option:hover { border-color: var(--primary); }
+        .optotype-option.selected { border-color: var(--primary); background: #E3F2FD; }
+        
+        .optotype-option .symbol {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .optotype-option .name { font-size: 14px; color: #333; font-weight: 600; }
+        .optotype-option .desc { font-size: 11px; color: var(--gray); margin-top: 4px; }
+        
+        .landolt-c-preview {
+            width: 40px;
+            height: 40px;
+            border: 5px solid black;
+            border-radius: 50%;
+            margin: 4px auto 8px;
+            position: relative;
+        }
+        
+        .landolt-c-preview::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 10px;
+            background: white;
+        }
         
         /* Calibration Screen */
         #calibrationScreen {
@@ -197,15 +229,11 @@
             max-width: 320px;
         }
         
-        .calibration-box-container {
-            position: relative;
-            margin: 24px 0;
-        }
+        .calibration-box-container { position: relative; margin: 24px 0; }
         
         .calibration-box {
             border: 3px solid var(--primary);
             background: rgba(21, 101, 192, 0.1);
-            transition: width 0.1s, height 0.1s;
         }
         
         .calibration-label {
@@ -236,22 +264,9 @@
             cursor: pointer;
         }
         
-        .calibration-controls button:active {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .calibration-size {
-            font-size: 18px;
-            color: var(--primary-dark);
-            min-width: 80px;
-        }
-        
-        .calibration-hint {
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 24px;
-        }
+        .calibration-controls button:active { background: var(--primary); color: white; }
+        .calibration-size { font-size: 18px; color: var(--primary-dark); min-width: 80px; }
+        .calibration-hint { font-size: 12px; color: var(--gray); margin-bottom: 24px; }
         
         /* Distance Screen */
         #distanceScreen {
@@ -262,32 +277,10 @@
             background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
         }
         
-        .distance-icon {
-            font-size: 80px;
-            margin-bottom: 24px;
-        }
-        
-        .distance-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--primary-dark);
-            margin-bottom: 16px;
-        }
-        
-        .distance-value {
-            font-size: 72px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-        
-        .distance-instruction {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 32px;
-            max-width: 320px;
-            line-height: 1.6;
-        }
+        .distance-icon { font-size: 80px; margin-bottom: 24px; }
+        .distance-title { font-size: 28px; font-weight: bold; color: var(--primary-dark); margin-bottom: 16px; }
+        .distance-value { font-size: 72px; font-weight: bold; color: var(--primary); margin-bottom: 8px; }
+        .distance-instruction { font-size: 18px; color: #333; margin-bottom: 32px; max-width: 320px; line-height: 1.6; }
         
         .distance-tips {
             background: white;
@@ -298,16 +291,8 @@
             text-align: left;
         }
         
-        .distance-tips h4 {
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-        
-        .distance-tips li {
-            font-size: 14px;
-            margin-bottom: 4px;
-            color: #333;
-        }
+        .distance-tips h4 { color: var(--primary); margin-bottom: 8px; }
+        .distance-tips li { font-size: 14px; margin-bottom: 4px; color: #333; }
         
         /* Test Screen */
         #testScreen { background: white; }
@@ -347,9 +332,26 @@
             font-family: 'Arial Black', 'Arial', sans-serif;
             font-weight: 900;
             color: black;
-            transition: transform 0.1s;
             line-height: 1;
         }
+        
+        .landolt-c {
+            border-radius: 50%;
+            border: solid black;
+            position: relative;
+            background: white;
+        }
+        
+        .landolt-c::after {
+            content: '';
+            position: absolute;
+            background: white;
+        }
+        
+        .landolt-c.gap-right::after { right: -1px; top: 50%; transform: translateY(-50%); width: 30%; height: 20%; }
+        .landolt-c.gap-left::after { left: -1px; top: 50%; transform: translateY(-50%); width: 30%; height: 20%; }
+        .landolt-c.gap-up::after { top: -1px; left: 50%; transform: translateX(-50%); width: 20%; height: 30%; }
+        .landolt-c.gap-down::after { bottom: -1px; left: 50%; transform: translateX(-50%); width: 20%; height: 30%; }
         
         .direction-hint {
             position: absolute;
@@ -371,12 +373,7 @@
             color: var(--gray);
         }
         
-        .feedback-bar {
-            height: 8px;
-            background: var(--gray-light);
-            transition: background-color 0.2s;
-        }
-        
+        .feedback-bar { height: 8px; background: var(--gray-light); transition: background-color 0.2s; }
         .feedback-bar.correct { background: var(--success); }
         .feedback-bar.incorrect { background: var(--error); }
         
@@ -400,17 +397,8 @@
             margin-bottom: 24px;
         }
         
-        .results-card h2 {
-            color: var(--primary);
-            margin-bottom: 16px;
-            font-size: 20px;
-        }
-        
-        .subject-id-display {
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 16px;
-        }
+        .results-card h2 { color: var(--primary); margin-bottom: 16px; font-size: 20px; }
+        .subject-id-display { font-size: 14px; color: var(--gray); margin-bottom: 16px; }
         
         .eye-result {
             background: var(--gray-light);
@@ -419,12 +407,7 @@
             margin-bottom: 12px;
         }
         
-        .eye-result h4 {
-            color: var(--primary-dark);
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-        
+        .eye-result h4 { color: var(--primary-dark); margin-bottom: 8px; font-size: 16px; }
         .eye-result p { font-size: 16px; margin: 4px 0; }
         .eye-result .decimal { font-size: 14px; color: var(--gray); }
         .timestamp { font-size: 12px; color: var(--gray); margin-top: 16px; }
@@ -445,14 +428,11 @@
         .save-status.error { background: #FFEBEE; color: var(--error); }
         .save-status.queued { background: #FFF3E0; color: var(--accent); }
         
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0,0,0,0.5);
             justify-content: center;
             align-items: center;
@@ -472,18 +452,12 @@
         .modal-content h3 { color: var(--primary-dark); margin-bottom: 16px; }
         .modal-content p { margin-bottom: 20px; line-height: 1.6; }
         
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         .processing { animation: pulse 0.5s ease-in-out; }
         
         .pending-badge {
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 10px; right: 10px;
             background: var(--accent);
             color: white;
             padding: 4px 10px;
@@ -494,10 +468,22 @@
         }
         
         .pending-badge.show { display: block; }
+        
+        .optotype-badge {
+            position: fixed;
+            top: 10px; left: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
     <div id="pendingBadge" class="pending-badge"></div>
+    <div id="optotypeBadge" class="optotype-badge" style="display:none;"></div>
 
     <!-- Home Screen -->
     <div id="homeScreen" class="screen active">
@@ -505,18 +491,33 @@
         <div class="title">EyeScopeAI</div>
         <div class="subtitle">Vision Screening Tool</div>
         
-        <div id="calibrationStatus" class="calibration-status not-calibrated">
-            ⚠️ Screen not calibrated
-        </div>
+        <div id="calibrationStatus" class="calibration-status not-calibrated">⚠️ Screen not calibrated</div>
         
         <div class="card">
             <h3>📋 Instructions</h3>
             <ol>
                 <li>Calibrate screen first (one-time)</li>
+                <li>Select optotype (E or C)</li>
                 <li>Hold phone at 40cm distance</li>
-                <li>Cover one eye</li>
-                <li>Swipe direction the E points</li>
+                <li>Swipe direction of gap/opening</li>
             </ol>
+        </div>
+        
+        <!-- Optotype Selector -->
+        <div class="optotype-selector">
+            <label>Select Optotype</label>
+            <div class="optotype-options">
+                <div class="optotype-option selected" data-type="E" onclick="selectOptotype('E')">
+                    <span class="symbol">E</span>
+                    <div class="name">Tumbling E</div>
+                    <div class="desc">ETDRS Standard</div>
+                </div>
+                <div class="optotype-option" data-type="C" onclick="selectOptotype('C')">
+                    <div class="landolt-c-preview"></div>
+                    <div class="name">Landolt C</div>
+                    <div class="desc">ISO 8596</div>
+                </div>
+            </div>
         </div>
         
         <div class="input-group">
@@ -527,16 +528,14 @@
         <button class="btn btn-primary" onclick="startTest()">Start Vision Test</button>
         <button class="btn btn-outline" onclick="showCalibration()">📐 Calibrate Screen</button>
         
-        <div class="version">v1.2.0 | ICMR STS 2025</div>
+        <div class="version">v1.3.0 | ICMR STS 2025</div>
         <div id="syncStatus" class="sync-status online">● Online</div>
     </div>
     
     <!-- Calibration Screen -->
     <div id="calibrationScreen" class="screen">
         <div class="calibration-title">📐 Screen Calibration</div>
-        <div class="calibration-instruction">
-            Place your <strong>3cm × 3cm</strong> card on the box below and adjust until it matches exactly.
-        </div>
+        <div class="calibration-instruction">Place your <strong>3cm × 3cm</strong> card on the box below and adjust until it matches exactly.</div>
         
         <div class="calibration-box-container">
             <div id="calibrationBox" class="calibration-box"></div>
@@ -549,22 +548,18 @@
             <button onclick="adjustCalibration(5)">+</button>
         </div>
         
-        <div class="calibration-hint">
-            Adjust until the box matches your card perfectly
-        </div>
+        <div class="calibration-hint">Adjust until the box matches your card perfectly</div>
         
         <button class="btn btn-success" onclick="saveCalibration()">✓ Done - Save Calibration</button>
         <button class="btn btn-outline btn-small" onclick="showScreen('home')">Cancel</button>
     </div>
     
-    <!-- Distance Instruction Screen -->
+    <!-- Distance Screen -->
     <div id="distanceScreen" class="screen">
         <div class="distance-icon">📏</div>
         <div class="distance-title">Testing Distance</div>
         <div class="distance-value">40 cm</div>
-        <div class="distance-instruction">
-            Hold the phone at <strong>arm's length</strong> (40cm from eyes). Use a string or ruler to measure.
-        </div>
+        <div class="distance-instruction">Hold the phone at <strong>arm's length</strong> (40cm from eyes). Use a string or ruler to measure.</div>
         
         <div class="distance-tips">
             <h4>💡 Tips</h4>
@@ -572,7 +567,7 @@
                 <li>Keep phone still during test</li>
                 <li>Ensure good lighting</li>
                 <li>Cover one eye completely</li>
-                <li>No squinting allowed</li>
+                <li id="optotypeHint">Swipe where the E points</li>
             </ul>
         </div>
         
@@ -586,9 +581,7 @@
             <span class="progress-text" id="progressText">Line 1/11 | Trial 1/3</span>
         </div>
         
-        <div class="acuity-display" id="acuityDisplay">
-            LogMAR: 1.0 | Snellen: 6/60
-        </div>
+        <div class="acuity-display" id="acuityDisplay">LogMAR: 1.0 | Snellen: 6/60</div>
         
         <div class="test-area" id="testArea">
             <span class="direction-hint hint-up">↑</span>
@@ -596,9 +589,10 @@
             <span class="direction-hint hint-left">←</span>
             <span class="direction-hint hint-right">→</span>
             <div class="tumbling-e" id="tumblingE">E</div>
+            <div class="landolt-c" id="landoltC" style="display:none;"></div>
         </div>
         
-        <div class="instructions-bar">Swipe in the direction the E is pointing</div>
+        <div class="instructions-bar" id="instructionsBar">Swipe in the direction the E is pointing</div>
         <div class="feedback-bar" id="feedbackBar"></div>
     </div>
     
@@ -637,7 +631,7 @@
         </div>
     </div>
     
-    <!-- Eye Transition Modal -->
+    <!-- Modal -->
     <div id="transitionModal" class="modal">
         <div class="modal-content">
             <h3>Right Eye Complete</h3>
@@ -647,16 +641,11 @@
     </div>
 
     <script>
-        // =====================================================
-        // EyeScopeAI v1.2.0
-        // With Calibration & Proper Optotype Sizing
-        // =====================================================
-        
         const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyPQ_ajsygSEIVsVcl_oRTij7iXISbeRc-BPUt3se5or8vFNeuwQ60g9IE1NQ8W1dcrqw/exec';
         const STORAGE_KEY = 'eyescopeai_pending';
         const CALIBRATION_KEY = 'eyescopeai_calibration';
+        const OPTOTYPE_KEY = 'eyescopeai_optotype';
         
-        // Test Configuration
         const CONFIG = {
             MAX_WRONG_CONSECUTIVE: 2,
             TRIALS_PER_LINE: 3,
@@ -667,34 +656,16 @@
             CALIBRATION_CARD_CM: 3
         };
         
-        // LogMAR Scale (11 lines: 1.0 to 0.0)
-        // Optotype size in mm at 40cm for each LogMAR level
-        // Formula: size = 5 * tan(5 * 10^LogMAR * π / 10800) * distance * 10
-        // At LogMAR 1.0, 40cm: ~29.1mm (for 5 strokes)
-        // At LogMAR 0.0, 40cm: ~2.91mm
         const LOGMAR_VALUES = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0];
         const SNELLEN_VALUES = ['6/60', '6/48', '6/38', '6/30', '6/24', '6/19', '6/15', '6/12', '6/9.5', '6/7.5', '6/6'];
-        
-        // Optotype HEIGHT in mm at 40cm distance for each LogMAR level
-        // LogMAR 1.0 = 29.1mm, each step down = divide by 1.2589
-        const OPTOTYPE_SIZE_MM = [
-            29.1,   // LogMAR 1.0
-            23.1,   // LogMAR 0.9
-            18.4,   // LogMAR 0.8
-            14.6,   // LogMAR 0.7
-            11.6,   // LogMAR 0.6
-            9.2,    // LogMAR 0.5
-            7.3,    // LogMAR 0.4
-            5.8,    // LogMAR 0.3
-            4.6,    // LogMAR 0.2
-            3.7,    // LogMAR 0.1
-            2.9     // LogMAR 0.0
-        ];
+        const OPTOTYPE_SIZE_MM = [29.1, 23.1, 18.4, 14.6, 11.6, 9.2, 7.3, 5.8, 4.6, 3.7, 2.9];
         
         const DIRECTIONS = { RIGHT: 0, UP: 90, LEFT: 180, DOWN: 270 };
         const DIR_ARRAY = [0, 90, 180, 270];
+        const DIR_NAMES = { 0: 'right', 90: 'up', 180: 'left', 270: 'down' };
         
-        // Calibration State
+        let selectedOptotype = 'E';
+        
         let calibration = {
             pixelsPerCm: null,
             calibrationBoxPx: 100,
@@ -702,7 +673,6 @@
             calibratedAt: null
         };
         
-        // Test State
         let state = {
             subjectId: '',
             isRightEye: true,
@@ -713,13 +683,11 @@
             currentDirection: 0,
             rightEyeLogMAR: -1,
             leftEyeLogMAR: -1,
-            isProcessing: false,
-            testStartTime: null
+            isProcessing: false
         };
         
         let touchStartX = 0, touchStartY = 0;
         
-        // DOM Elements
         const screens = {
             home: document.getElementById('homeScreen'),
             calibration: document.getElementById('calibrationScreen'),
@@ -738,19 +706,35 @@
             acuityDisplay: document.getElementById('acuityDisplay'),
             testArea: document.getElementById('testArea'),
             tumblingE: document.getElementById('tumblingE'),
+            landoltC: document.getElementById('landoltC'),
             feedbackBar: document.getElementById('feedbackBar'),
+            instructionsBar: document.getElementById('instructionsBar'),
             transitionModal: document.getElementById('transitionModal'),
             transitionMessage: document.getElementById('transitionMessage'),
             saveStatus: document.getElementById('saveStatus'),
             retryBtn: document.getElementById('retryBtn'),
             syncStatus: document.getElementById('syncStatus'),
-            pendingBadge: document.getElementById('pendingBadge')
+            pendingBadge: document.getElementById('pendingBadge'),
+            optotypeBadge: document.getElementById('optotypeBadge'),
+            optotypeHint: document.getElementById('optotypeHint')
         };
         
-        // =====================================================
-        // Calibration Functions
-        // =====================================================
+        // Optotype Selection
+        function selectOptotype(type) {
+            selectedOptotype = type;
+            localStorage.setItem(OPTOTYPE_KEY, type);
+            document.querySelectorAll('.optotype-option').forEach(opt => {
+                opt.classList.toggle('selected', opt.dataset.type === type);
+            });
+            elements.optotypeHint.textContent = type === 'E' ? 'Swipe where the E points' : 'Swipe where the gap is';
+        }
         
+        function loadOptotypePreference() {
+            const saved = localStorage.getItem(OPTOTYPE_KEY);
+            if (saved) selectOptotype(saved);
+        }
+        
+        // Calibration
         function loadCalibration() {
             try {
                 const saved = localStorage.getItem(CALIBRATION_KEY);
@@ -759,23 +743,16 @@
                     updateCalibrationStatus();
                     return true;
                 }
-            } catch (e) {
-                console.error('Error loading calibration:', e);
-            }
+            } catch (e) {}
             return false;
         }
         
         function saveCalibration() {
-            // Calculate pixels per cm based on box size
             calibration.pixelsPerCm = calibration.calibrationBoxPx / CONFIG.CALIBRATION_CARD_CM;
             calibration.calibratedAt = new Date().toISOString();
-            calibration.deviceModel = navigator.userAgent;
-            
             localStorage.setItem(CALIBRATION_KEY, JSON.stringify(calibration));
             updateCalibrationStatus();
             showScreen('home');
-            
-            console.log('Calibration saved:', calibration.pixelsPerCm, 'px/cm');
         }
         
         function updateCalibrationStatus() {
@@ -799,32 +776,31 @@
         }
         
         function updateCalibrationBox() {
-            const size = calibration.calibrationBoxPx;
-            elements.calibrationBox.style.width = size + 'px';
-            elements.calibrationBox.style.height = size + 'px';
-            elements.calibrationSize.textContent = size + ' px';
+            elements.calibrationBox.style.width = calibration.calibrationBoxPx + 'px';
+            elements.calibrationBox.style.height = calibration.calibrationBoxPx + 'px';
+            elements.calibrationSize.textContent = calibration.calibrationBoxPx + ' px';
         }
         
-        // =====================================================
         // Screen Management
-        // =====================================================
-        
         function showScreen(screenName) {
             Object.values(screens).forEach(s => s.classList.remove('active'));
             screens[screenName].classList.add('active');
+            
+            if (screenName === 'test') {
+                elements.optotypeBadge.textContent = selectedOptotype === 'E' ? 'Tumbling E' : 'Landolt C';
+                elements.optotypeBadge.style.display = 'block';
+            } else {
+                elements.optotypeBadge.style.display = 'none';
+            }
         }
         
         function showModal(show) {
             elements.transitionModal.classList.toggle('active', show);
         }
         
-        // =====================================================
         // Test Flow
-        // =====================================================
-        
         function startTest() {
             const subjectId = elements.subjectIdInput.value.trim();
-            
             if (!subjectId) {
                 elements.subjectIdInput.classList.add('required-field');
                 elements.subjectIdInput.focus();
@@ -833,26 +809,24 @@
             }
             
             if (!calibration.pixelsPerCm) {
-                if (!confirm('Screen not calibrated. Results may be inaccurate. Continue anyway?')) {
+                if (!confirm('Screen not calibrated. Continue anyway?')) {
                     showCalibration();
                     return;
                 }
-                // Use default estimate (assume ~38 px/cm for typical phones)
                 calibration.pixelsPerCm = 38;
             }
             
             elements.subjectIdInput.classList.remove('required-field');
             state.subjectId = subjectId;
-            state.testStartTime = new Date();
-            
-            // Show distance instruction
+            elements.instructionsBar.textContent = selectedOptotype === 'E' 
+                ? 'Swipe in the direction the E is pointing' 
+                : 'Swipe in the direction of the gap';
             showScreen('distance');
         }
         
         function beginTest() {
             resetTestState();
             state.isRightEye = true;
-            
             showScreen('test');
             setupTouchListeners();
             presentNextTrial();
@@ -880,108 +854,67 @@
             showScreen('home');
         }
         
-        // =====================================================
-        // Optotype Sizing (Calibrated)
-        // =====================================================
-        
+        // Sizing
         function getOptotypeSizePx(lineIndex) {
             const sizeMm = OPTOTYPE_SIZE_MM[lineIndex];
-            const sizeCm = sizeMm / 10;
-            const sizePx = sizeCm * calibration.pixelsPerCm;
-            return sizePx;
+            return (sizeMm / 10) * calibration.pixelsPerCm;
         }
         
-        // =====================================================
         // Trial Presentation
-        // =====================================================
-        
         function presentNextTrial() {
             elements.eyeIndicator.textContent = state.isRightEye ? 'Right Eye (OD)' : 'Left Eye (OS)';
             elements.progressText.textContent = `Line ${state.currentLine + 1}/${LOGMAR_VALUES.length} | Trial ${state.trialOnLine + 1}/${CONFIG.TRIALS_PER_LINE}`;
-            
-            const currentLogMAR = LOGMAR_VALUES[state.currentLine];
-            elements.acuityDisplay.textContent = `LogMAR: ${currentLogMAR.toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]}`;
+            elements.acuityDisplay.textContent = `LogMAR: ${LOGMAR_VALUES[state.currentLine].toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]}`;
             
             state.currentDirection = DIR_ARRAY[Math.floor(Math.random() * 4)];
-            
-            // Get calibrated size
             const sizePx = getOptotypeSizePx(state.currentLine);
             
-            elements.tumblingE.style.fontSize = sizePx + 'px';
-            elements.tumblingE.style.transform = `rotate(${-state.currentDirection}deg)`;
+            if (selectedOptotype === 'E') {
+                elements.tumblingE.style.display = 'block';
+                elements.landoltC.style.display = 'none';
+                elements.tumblingE.style.fontSize = sizePx + 'px';
+                elements.tumblingE.style.transform = `rotate(${-state.currentDirection}deg)`;
+            } else {
+                elements.tumblingE.style.display = 'none';
+                elements.landoltC.style.display = 'block';
+                const borderWidth = Math.max(2, sizePx / 5);
+                elements.landoltC.style.width = sizePx + 'px';
+                elements.landoltC.style.height = sizePx + 'px';
+                elements.landoltC.style.borderWidth = borderWidth + 'px';
+                elements.landoltC.className = 'landolt-c gap-' + DIR_NAMES[state.currentDirection];
+            }
             
             elements.feedbackBar.className = 'feedback-bar';
         }
         
-        // =====================================================
-        // Touch/Swipe Detection
-        // =====================================================
-        
+        // Touch Detection
         let touchListenersAdded = false;
         
         function setupTouchListeners() {
             if (touchListenersAdded) return;
             touchListenersAdded = true;
-            
-            const testArea = elements.testArea;
-            testArea.addEventListener('touchstart', handleTouchStart, { passive: true });
-            testArea.addEventListener('touchend', handleTouchEnd, { passive: true });
-            testArea.addEventListener('mousedown', handleMouseDown);
-            testArea.addEventListener('mouseup', handleMouseUp);
-        }
-        
-        function handleTouchStart(e) {
-            if (state.isProcessing) return;
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }
-        
-        function handleTouchEnd(e) {
-            if (state.isProcessing) return;
-            processSwipe(e.changedTouches[0].clientX - touchStartX, e.changedTouches[0].clientY - touchStartY);
-        }
-        
-        function handleMouseDown(e) {
-            if (state.isProcessing) return;
-            touchStartX = e.clientX;
-            touchStartY = e.clientY;
-        }
-        
-        function handleMouseUp(e) {
-            if (state.isProcessing) return;
-            processSwipe(e.clientX - touchStartX, e.clientY - touchStartY);
+            elements.testArea.addEventListener('touchstart', e => { if (!state.isProcessing) { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }}, { passive: true });
+            elements.testArea.addEventListener('touchend', e => { if (!state.isProcessing) processSwipe(e.changedTouches[0].clientX - touchStartX, e.changedTouches[0].clientY - touchStartY); }, { passive: true });
+            elements.testArea.addEventListener('mousedown', e => { if (!state.isProcessing) { touchStartX = e.clientX; touchStartY = e.clientY; }});
+            elements.testArea.addEventListener('mouseup', e => { if (!state.isProcessing) processSwipe(e.clientX - touchStartX, e.clientY - touchStartY); });
         }
         
         function processSwipe(diffX, diffY) {
             const absX = Math.abs(diffX), absY = Math.abs(diffY);
             if (Math.max(absX, absY) < CONFIG.SWIPE_THRESHOLD) return;
-            
-            let swipeDirection;
-            if (absX > absY) {
-                swipeDirection = diffX > 0 ? DIRECTIONS.RIGHT : DIRECTIONS.LEFT;
-            } else {
-                swipeDirection = diffY > 0 ? DIRECTIONS.DOWN : DIRECTIONS.UP;
-            }
-            processResponse(swipeDirection);
+            const dir = absX > absY ? (diffX > 0 ? DIRECTIONS.RIGHT : DIRECTIONS.LEFT) : (diffY > 0 ? DIRECTIONS.DOWN : DIRECTIONS.UP);
+            processResponse(dir);
         }
-        
-        // =====================================================
-        // Response Processing
-        // =====================================================
         
         function processResponse(userDirection) {
             state.isProcessing = true;
-            const isCorrect = (userDirection === state.currentDirection);
+            const isCorrect = userDirection === state.currentDirection;
             
             elements.feedbackBar.className = 'feedback-bar ' + (isCorrect ? 'correct' : 'incorrect');
-            elements.tumblingE.classList.add('processing');
+            (selectedOptotype === 'E' ? elements.tumblingE : elements.landoltC).classList.add('processing');
             
-            if (isCorrect) {
-                state.correctOnLine++;
-                state.consecutiveWrong = 0;
-            } else {
-                state.consecutiveWrong++;
-            }
+            if (isCorrect) { state.correctOnLine++; state.consecutiveWrong = 0; }
+            else { state.consecutiveWrong++; }
             
             state.trialOnLine++;
             
@@ -993,10 +926,7 @@
             if (state.trialOnLine >= CONFIG.TRIALS_PER_LINE) {
                 if (state.correctOnLine >= CONFIG.MIN_CORRECT_TO_PASS) {
                     state.currentLine++;
-                    if (state.currentLine >= LOGMAR_VALUES.length) {
-                        finishCurrentEye(LOGMAR_VALUES.length - 1);
-                        return;
-                    }
+                    if (state.currentLine >= LOGMAR_VALUES.length) { finishCurrentEye(LOGMAR_VALUES.length - 1); return; }
                 } else {
                     finishCurrentEye(state.currentLine > 0 ? state.currentLine - 1 : 0);
                     return;
@@ -1007,24 +937,17 @@
             
             setTimeout(() => {
                 state.isProcessing = false;
-                elements.tumblingE.classList.remove('processing');
+                (selectedOptotype === 'E' ? elements.tumblingE : elements.landoltC).classList.remove('processing');
                 presentNextTrial();
             }, CONFIG.FEEDBACK_DELAY);
         }
         
-        // =====================================================
-        // Test Completion
-        // =====================================================
-        
         function finishCurrentEye(finalLine) {
             const logMAR = LOGMAR_VALUES[finalLine];
-            
             if (state.isRightEye) {
                 state.rightEyeLogMAR = logMAR;
                 setTimeout(() => {
-                    elements.transitionMessage.innerHTML = 
-                        `Right Eye: <strong>${SNELLEN_VALUES[finalLine]}</strong> (LogMAR ${logMAR.toFixed(1)})<br><br>` +
-                        `Now cover your <strong>RIGHT</strong> eye for <strong>LEFT</strong> eye test.`;
+                    elements.transitionMessage.innerHTML = `Right Eye: <strong>${SNELLEN_VALUES[finalLine]}</strong> (LogMAR ${logMAR.toFixed(1)})<br><br>Now cover your <strong>RIGHT</strong> eye for <strong>LEFT</strong> eye test.`;
                     showModal(true);
                 }, CONFIG.FEEDBACK_DELAY);
             } else {
@@ -1033,14 +956,10 @@
             }
         }
         
-        // =====================================================
-        // Data & Backend
-        // =====================================================
-        
+        // Data
         function buildResultData() {
             const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
             const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
-            
             return {
                 timestamp: new Date().toISOString(),
                 subject_id: state.subjectId,
@@ -1052,21 +971,17 @@
                 left_eye_decimal: Math.pow(10, -state.leftEyeLogMAR).toFixed(2),
                 test_distance_cm: CONFIG.TEST_DISTANCE_CM,
                 screen_ppi: calibration.pixelsPerCm ? (calibration.pixelsPerCm * 2.54).toFixed(1) : 'uncalibrated',
-                device_info: navigator.userAgent.substring(0, 100)
+                device_info: navigator.userAgent.substring(0, 100),
+                optotype_used: selectedOptotype === 'E' ? 'Tumbling E' : 'Landolt C'
             };
         }
         
         function getLineFromLogMAR(logMAR) {
-            for (let i = 0; i < LOGMAR_VALUES.length; i++) {
-                if (Math.abs(LOGMAR_VALUES[i] - logMAR) < 0.05) return i;
-            }
+            for (let i = 0; i < LOGMAR_VALUES.length; i++) if (Math.abs(LOGMAR_VALUES[i] - logMAR) < 0.05) return i;
             return 0;
         }
         
-        // =====================================================
-        // Backend Sync
-        // =====================================================
-        
+        // Backend
         function updateOnlineStatus() {
             const isOnline = navigator.onLine;
             elements.syncStatus.className = 'sync-status ' + (isOnline ? 'online' : 'offline');
@@ -1077,24 +992,13 @@
         window.addEventListener('online', updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
         
-        function getPendingData() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-            catch { return []; }
-        }
-        
-        function savePendingData(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            updatePendingBadge();
-        }
+        function getPendingData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }}
+        function savePendingData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); updatePendingBadge(); }
         
         function updatePendingBadge() {
             const pending = getPendingData();
-            if (pending.length > 0) {
-                elements.pendingBadge.textContent = `${pending.length} pending`;
-                elements.pendingBadge.classList.add('show');
-            } else {
-                elements.pendingBadge.classList.remove('show');
-            }
+            elements.pendingBadge.textContent = `${pending.length} pending`;
+            elements.pendingBadge.classList.toggle('show', pending.length > 0);
         }
         
         async function saveToBackend(data) {
@@ -1114,129 +1018,74 @@
             }
             
             try {
-                await fetch(BACKEND_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                
-                const updatedPending = getPendingData().filter(d => d._tempId !== dataWithId._tempId);
-                savePendingData(updatedPending);
-                
+                await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                savePendingData(getPendingData().filter(d => d._tempId !== dataWithId._tempId));
                 elements.saveStatus.className = 'save-status saved';
                 elements.saveStatus.textContent = '✓ Saved';
-            } catch (error) {
-                console.error('Save error:', error);
+            } catch (e) {
                 elements.saveStatus.className = 'save-status error';
-                elements.saveStatus.textContent = '⚠ Save failed - stored locally';
+                elements.saveStatus.textContent = '⚠ Failed - stored locally';
                 elements.retryBtn.style.display = 'block';
             }
         }
         
         async function syncPendingData() {
             const pending = getPendingData();
-            if (pending.length === 0) return;
-            
             for (const data of pending) {
                 try {
-                    await fetch(BACKEND_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                    
-                    const updated = getPendingData().filter(d => d._tempId !== data._tempId);
-                    savePendingData(updated);
-                } catch (error) {
-                    break;
-                }
+                    await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                    savePendingData(getPendingData().filter(d => d._tempId !== data._tempId));
+                } catch { break; }
             }
             updatePendingBadge();
         }
         
         function retrySync() {
-            if (navigator.onLine) {
-                syncPendingData();
-                saveToBackend(buildResultData());
-            } else {
-                alert('Still offline. Data saved locally.');
-            }
+            if (navigator.onLine) { syncPendingData(); saveToBackend(buildResultData()); }
+            else alert('Still offline. Data saved locally.');
         }
         
-        // =====================================================
-        // Results Display
-        // =====================================================
-        
+        // Results
         function showResultsAndSave() {
             showScreen('results');
-            
             document.getElementById('subjectIdDisplay').textContent = `Subject ID: ${state.subjectId}`;
             
-            if (state.rightEyeLogMAR >= 0) {
-                const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
-                document.getElementById('rightLogMAR').textContent = `LogMAR: ${state.rightEyeLogMAR.toFixed(1)}`;
-                document.getElementById('rightSnellen').textContent = `Snellen: ${SNELLEN_VALUES[rightLine]}`;
-                document.getElementById('rightDecimal').textContent = `Decimal VA: ${Math.pow(10, -state.rightEyeLogMAR).toFixed(2)}`;
-            }
+            const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
+            const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
             
-            if (state.leftEyeLogMAR >= 0) {
-                const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
-                document.getElementById('leftLogMAR').textContent = `LogMAR: ${state.leftEyeLogMAR.toFixed(1)}`;
-                document.getElementById('leftSnellen').textContent = `Snellen: ${SNELLEN_VALUES[leftLine]}`;
-                document.getElementById('leftDecimal').textContent = `Decimal VA: ${Math.pow(10, -state.leftEyeLogMAR).toFixed(2)}`;
-            }
+            document.getElementById('rightLogMAR').textContent = `LogMAR: ${state.rightEyeLogMAR.toFixed(1)}`;
+            document.getElementById('rightSnellen').textContent = `Snellen: ${SNELLEN_VALUES[rightLine]}`;
+            document.getElementById('rightDecimal').textContent = `Decimal VA: ${Math.pow(10, -state.rightEyeLogMAR).toFixed(2)}`;
+            
+            document.getElementById('leftLogMAR').textContent = `LogMAR: ${state.leftEyeLogMAR.toFixed(1)}`;
+            document.getElementById('leftSnellen').textContent = `Snellen: ${SNELLEN_VALUES[leftLine]}`;
+            document.getElementById('leftDecimal').textContent = `Decimal VA: ${Math.pow(10, -state.leftEyeLogMAR).toFixed(2)}`;
             
             document.getElementById('timestamp').textContent = `Tested: ${new Date().toLocaleString()}`;
             
             saveToBackend(buildResultData());
         }
         
-        // =====================================================
-        // Share
-        // =====================================================
-        
         function shareResults() {
             const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
             const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
-            
-            const shareText = `EyeScopeAI Results
-Subject: ${state.subjectId}
-Date: ${new Date().toLocaleString()}
-
-OD (Right): ${SNELLEN_VALUES[rightLine]} | LogMAR ${state.rightEyeLogMAR.toFixed(1)}
-OS (Left): ${SNELLEN_VALUES[leftLine]} | LogMAR ${state.leftEyeLogMAR.toFixed(1)}
-
-Distance: ${CONFIG.TEST_DISTANCE_CM}cm | Calibrated: ${calibration.pixelsPerCm ? 'Yes' : 'No'}`;
-            
-            if (navigator.share) {
-                navigator.share({ title: 'EyeScopeAI', text: shareText }).catch(console.error);
-            } else {
-                navigator.clipboard.writeText(shareText).then(() => alert('Copied!')).catch(() => alert(shareText));
-            }
+            const text = `EyeScopeAI Results\nSubject: ${state.subjectId}\nOptotype: ${selectedOptotype === 'E' ? 'Tumbling E' : 'Landolt C'}\n\nOD: ${SNELLEN_VALUES[rightLine]} (LogMAR ${state.rightEyeLogMAR.toFixed(1)})\nOS: ${SNELLEN_VALUES[leftLine]} (LogMAR ${state.leftEyeLogMAR.toFixed(1)})`;
+            if (navigator.share) navigator.share({ title: 'EyeScopeAI', text }).catch(() => {});
+            else navigator.clipboard.writeText(text).then(() => alert('Copied!')).catch(() => alert(text));
         }
         
-        // =====================================================
         // Init
-        // =====================================================
-        
         loadCalibration();
+        loadOptotypePreference();
         updateOnlineStatus();
         updatePendingBadge();
         updateCalibrationBox();
         if (navigator.onLine) syncPendingData();
         
-        window.addEventListener('beforeunload', (e) => {
-            if (screens.test.classList.contains('active')) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        });
+        window.addEventListener('beforeunload', e => { if (screens.test.classList.contains('active')) { e.preventDefault(); e.returnValue = ''; }});
+        document.addEventListener('dblclick', e => e.preventDefault());
         
-        document.addEventListener('dblclick', (e) => e.preventDefault());
-        
-        console.log('EyeScopeAI v1.2.0 - Calibrated Vision Screening');
+        console.log('EyeScopeAI v1.3.0 - Tumbling E + Landolt C');
     </script>
 </body>
 </html>
