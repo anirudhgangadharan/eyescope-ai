@@ -6,1099 +6,628 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#1565C0">
-    <title>EyeScopeAI - Vision Screening</title>
+    <title>EyeScopeAI v2.1</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-        
-        :root {
-            --primary: #1565C0;
-            --primary-dark: #0D47A1;
-            --accent: #FF6F00;
-            --success: #4CAF50;
-            --error: #F44336;
-            --gray: #9E9E9E;
-            --gray-light: #F5F5F5;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: white;
-            min-height: 100vh;
-            overflow-x: hidden;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        
-        .screen {
-            display: none;
-            width: 100%;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        :root { --primary: #1565C0; --primary-dark: #0D47A1; --accent: #FF6F00; --success: #4CAF50; --error: #F44336; --gray: #9E9E9E; --gray-light: #F5F5F5; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: white; min-height: 100vh; overflow-x: hidden; user-select: none; }
+        .screen { display: none; width: 100%; min-height: 100vh; flex-direction: column; }
         .screen.active { display: flex; }
         
-        #homeScreen {
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            text-align: center;
-        }
+        #homeScreen { justify-content: flex-start; align-items: center; padding: 16px; text-align: center; overflow-y: auto; }
+        .logo { font-size: 48px; margin-bottom: 6px; margin-top: 8px; }
+        .title { font-size: 26px; font-weight: bold; color: var(--primary-dark); margin-bottom: 2px; }
+        .subtitle { font-size: 13px; color: var(--gray); margin-bottom: 12px; }
         
-        .logo { font-size: 72px; margin-bottom: 16px; }
-        
-        .title {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--primary-dark);
-            margin-bottom: 8px;
-        }
-        
-        .subtitle {
-            font-size: 16px;
-            color: var(--gray);
-            margin-bottom: 24px;
-        }
-        
-        .calibration-status {
-            font-size: 14px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-        }
-        
+        .calibration-status { font-size: 12px; padding: 5px 12px; border-radius: 16px; margin-bottom: 12px; }
         .calibration-status.calibrated { background: #E8F5E9; color: var(--success); }
         .calibration-status.not-calibrated { background: #FFF3E0; color: var(--accent); }
         
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 24px;
-            width: 100%;
-            max-width: 400px;
-            text-align: left;
-        }
+        .card { background: white; border-radius: 10px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 12px; width: 100%; max-width: 360px; text-align: left; }
+        .card h3 { color: var(--primary); margin-bottom: 8px; font-size: 15px; }
+        .card li { font-size: 12px; line-height: 1.4; color: #333; }
+        .card ol { padding-left: 16px; }
         
-        .card h3 { color: var(--primary); margin-bottom: 12px; font-size: 18px; }
-        .card p, .card li { font-size: 14px; line-height: 1.6; color: #333; }
-        .card ol { padding-left: 20px; }
-        
-        .input-group {
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 24px;
-        }
-        
-        .input-group label {
-            display: block;
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 8px;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            outline: none;
-        }
-        
+        .input-group { width: 100%; max-width: 360px; margin-bottom: 12px; }
+        .input-group label { display: block; font-size: 12px; color: var(--gray); margin-bottom: 4px; }
+        .input-group input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; outline: none; }
         .input-group input:focus { border-color: var(--primary); }
-        .input-group input.required-field { border-color: var(--error); }
+        .input-group input.error { border-color: var(--error); }
         
-        .btn {
-            padding: 16px 32px;
-            font-size: 18px;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 12px;
-        }
-        
+        .btn { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; width: 100%; max-width: 360px; margin-bottom: 8px; }
         .btn:active { transform: scale(0.98); }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-accent { background: var(--accent); color: white; }
         .btn-success { background: var(--success); color: white; }
         .btn-outline { background: white; color: var(--primary); border: 2px solid var(--primary); }
-        .btn-small { padding: 12px 24px; font-size: 16px; }
+        .btn-small { padding: 10px 18px; font-size: 13px; }
         
-        .version { font-size: 12px; color: var(--gray); margin-top: 24px; }
-        
-        .sync-status {
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 12px;
-            margin-top: 8px;
-        }
-        
+        .version { font-size: 10px; color: var(--gray); margin-top: 12px; }
+        .sync-status { font-size: 10px; padding: 2px 8px; border-radius: 8px; margin-top: 4px; }
         .sync-status.online { background: #E8F5E9; color: var(--success); }
         .sync-status.offline { background: #FFF3E0; color: var(--accent); }
         
         /* Optotype Selector */
-        .optotype-selector {
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 24px;
-        }
-        
-        .optotype-selector label {
-            display: block;
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 12px;
-        }
-        
-        .optotype-options { display: flex; gap: 12px; }
-        
-        .optotype-option {
-            flex: 1;
-            padding: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .optotype-option:hover { border-color: var(--primary); }
+        .optotype-selector { width: 100%; max-width: 360px; margin-bottom: 12px; }
+        .optotype-selector label { display: block; font-size: 12px; color: var(--gray); margin-bottom: 8px; }
+        .optotype-options { display: flex; gap: 6px; }
+        .optotype-option { flex: 1; padding: 10px 6px; border: 2px solid #e0e0e0; border-radius: 8px; text-align: center; cursor: pointer; }
         .optotype-option.selected { border-color: var(--primary); background: #E3F2FD; }
+        .optotype-option .symbol { font-size: 28px; font-weight: bold; display: block; }
+        .optotype-option .name { font-size: 11px; color: #333; font-weight: 600; }
+        .optotype-option .desc { font-size: 9px; color: var(--gray); }
         
-        .optotype-option .symbol {
-            font-size: 48px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: block;
-        }
+        .ring-preview { width: 28px; height: 28px; margin: 0 auto 2px; border: 4px solid black; border-radius: 50%; position: relative; }
+        .ring-preview::after { content: ''; position: absolute; background: white; }
+        .ring-preview.c::after { right: -5px; top: 50%; transform: translateY(-50%); width: 10px; height: 7px; }
         
-        .optotype-option .name { font-size: 14px; color: #333; font-weight: 600; }
-        .optotype-option .desc { font-size: 11px; color: var(--gray); margin-top: 4px; }
+        .square-u-preview { width: 22px; height: 22px; margin: 3px auto 4px; border: 4px solid black; border-top: none; background: white; }
         
-        .landolt-c-preview {
-            width: 40px;
-            height: 40px;
-            border: 5px solid black;
-            border-radius: 50%;
-            margin: 4px auto 8px;
-            position: relative;
-        }
+        /* Calibration */
+        #calibrationScreen { justify-content: center; align-items: center; padding: 20px; text-align: center; }
+        .cal-title { font-size: 20px; font-weight: bold; color: var(--primary-dark); margin-bottom: 6px; }
+        .cal-inst { font-size: 14px; color: var(--gray); margin-bottom: 16px; max-width: 280px; }
+        .cal-box-wrap { position: relative; margin: 16px 0; }
+        .cal-box { border: 3px solid var(--primary); background: rgba(21,101,192,0.1); }
+        .cal-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 13px; color: var(--primary-dark); font-weight: bold; }
+        .cal-controls { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; }
+        .cal-controls button { width: 50px; height: 50px; font-size: 24px; border-radius: 50%; border: 2px solid var(--primary); background: white; color: var(--primary); }
+        .cal-controls button:active { background: var(--primary); color: white; }
+        .cal-size { font-size: 14px; color: var(--primary-dark); min-width: 90px; text-align: center; }
+        .cal-hint { font-size: 11px; color: var(--gray); margin-bottom: 16px; }
+        .fine-tune { display: flex; gap: 6px; margin-bottom: 16px; }
         
-        .landolt-c-preview::after {
-            content: '';
-            position: absolute;
-            right: -6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 10px;
-            background: white;
-        }
-        
-        /* Calibration Screen */
-        #calibrationScreen {
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            text-align: center;
-        }
-        
-        .calibration-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-dark);
-            margin-bottom: 8px;
-        }
-        
-        .calibration-instruction {
-            font-size: 16px;
-            color: var(--gray);
-            margin-bottom: 24px;
-            max-width: 320px;
-        }
-        
-        .calibration-box-container { position: relative; margin: 24px 0; }
-        
-        .calibration-box {
-            border: 3px solid var(--primary);
-            background: rgba(21, 101, 192, 0.1);
-        }
-        
-        .calibration-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
-            color: var(--primary-dark);
-            font-weight: bold;
-        }
-        
-        .calibration-controls {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-            align-items: center;
-        }
-        
-        .calibration-controls button {
-            width: 60px;
-            height: 60px;
-            font-size: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            background: white;
-            color: var(--primary);
-            cursor: pointer;
-        }
-        
-        .calibration-controls button:active { background: var(--primary); color: white; }
-        .calibration-size { font-size: 18px; color: var(--primary-dark); min-width: 80px; }
-        .calibration-hint { font-size: 12px; color: var(--gray); margin-bottom: 24px; }
-        
-        /* Distance Screen */
-        #distanceScreen {
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            text-align: center;
-            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
-        }
-        
-        .distance-icon { font-size: 80px; margin-bottom: 24px; }
-        .distance-title { font-size: 28px; font-weight: bold; color: var(--primary-dark); margin-bottom: 16px; }
-        .distance-value { font-size: 72px; font-weight: bold; color: var(--primary); margin-bottom: 8px; }
-        .distance-instruction { font-size: 18px; color: #333; margin-bottom: 32px; max-width: 320px; line-height: 1.6; }
-        
-        .distance-tips {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 32px;
-            max-width: 320px;
-            text-align: left;
-        }
-        
-        .distance-tips h4 { color: var(--primary); margin-bottom: 8px; }
-        .distance-tips li { font-size: 14px; margin-bottom: 4px; color: #333; }
+        /* Distance */
+        #distanceScreen { justify-content: center; align-items: center; padding: 20px; text-align: center; background: linear-gradient(135deg, #E3F2FD, #BBDEFB); }
+        .dist-icon { font-size: 56px; margin-bottom: 12px; }
+        .dist-title { font-size: 22px; font-weight: bold; color: var(--primary-dark); margin-bottom: 8px; }
+        .dist-value { font-size: 56px; font-weight: bold; color: var(--primary); margin-bottom: 6px; }
+        .dist-inst { font-size: 15px; color: #333; margin-bottom: 20px; max-width: 280px; line-height: 1.4; }
+        .dist-tips { background: white; border-radius: 10px; padding: 12px; margin-bottom: 20px; max-width: 280px; text-align: left; }
+        .dist-tips h4 { color: var(--primary); margin-bottom: 6px; font-size: 13px; }
+        .dist-tips li { font-size: 12px; margin-bottom: 3px; color: #333; }
         
         /* Test Screen */
         #testScreen { background: white; }
+        .test-header { background: var(--primary); color: white; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+        .eye-ind { font-size: 15px; font-weight: bold; }
+        .prog-text { font-size: 12px; opacity: 0.9; }
+        .acuity-bar { background: var(--gray-light); padding: 5px; text-align: center; font-size: 10px; color: var(--gray); }
         
-        .test-header {
-            background: var(--primary);
-            color: white;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .test-area { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 40vh; padding: 16px; }
         
-        .eye-indicator { font-size: 18px; font-weight: bold; }
-        .progress-text { font-size: 14px; opacity: 0.9; }
-        
-        .acuity-display {
-            background: var(--gray-light);
-            padding: 8px;
-            text-align: center;
-            font-size: 12px;
-            color: var(--gray);
-        }
-        
-        .test-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            min-height: 60vh;
-            touch-action: none;
-        }
-        
-        .tumbling-e {
-            font-family: 'Arial Black', 'Arial', sans-serif;
-            font-weight: 900;
-            color: black;
-            line-height: 1;
-        }
-        
-        .landolt-c {
-            position: relative;
-            border-radius: 50%;
-            background: radial-gradient(circle, white 0%, white 50%, black 50%, black 100%);
-        }
-        
-        .landolt-c .gap {
-            position: absolute;
-            background: white;
-        }
-        
+        .tumbling-e { font-family: 'Arial Black', Arial, sans-serif; font-weight: 900; color: black; line-height: 1; }
+        .landolt-c { position: relative; border-radius: 50%; background: radial-gradient(circle, white 0%, white 50%, black 50%, black 100%); }
+        .landolt-c .gap { position: absolute; background: white; }
         .landolt-c.gap-right .gap { right: 0; top: 35%; width: 55%; height: 30%; }
         .landolt-c.gap-left .gap { left: 0; top: 35%; width: 55%; height: 30%; }
         .landolt-c.gap-up .gap { top: 0; left: 35%; width: 30%; height: 55%; }
         .landolt-c.gap-down .gap { bottom: 0; left: 35%; width: 30%; height: 55%; }
         
-        .direction-hint {
-            position: absolute;
-            font-size: 24px;
-            opacity: 0.3;
-            color: var(--gray);
-        }
+        /* Square U - distinct from circular Landolt C */
+        .square-u { position: relative; background: black; }
+        .square-u .inner { position: absolute; background: white; }
+        .square-u.gap-down .inner { left: 20%; right: 20%; top: 20%; bottom: 0; }
+        .square-u.gap-up .inner { left: 20%; right: 20%; top: 0; bottom: 20%; }
+        .square-u.gap-left .inner { left: 0; right: 20%; top: 20%; bottom: 20%; }
+        .square-u.gap-right .inner { left: 20%; right: 0; top: 20%; bottom: 20%; }
         
-        .hint-up { top: 20px; left: 50%; transform: translateX(-50%); }
-        .hint-down { bottom: 100px; left: 50%; transform: translateX(-50%); }
-        .hint-left { left: 20px; top: 50%; transform: translateY(-50%); }
-        .hint-right { right: 20px; top: 50%; transform: translateY(-50%); }
+        /* Eye indicator overlay */
+        .eye-overlay { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 8px 24px; border-radius: 20px; font-size: 18px; font-weight: bold; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
         
-        .instructions-bar {
-            background: var(--gray-light);
-            padding: 16px;
-            text-align: center;
-            font-size: 16px;
-            color: var(--gray);
-        }
-        
-        .feedback-bar { height: 8px; background: var(--gray-light); transition: background-color 0.2s; }
+        .feedback-bar { height: 5px; background: var(--gray-light); }
         .feedback-bar.correct { background: var(--success); }
         .feedback-bar.incorrect { background: var(--error); }
         
-        /* Results Screen */
-        #resultsScreen {
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            overflow-y: auto;
-        }
+        /* Direction Buttons */
+        .dir-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; max-width: 260px; padding: 12px; background: var(--gray-light); }
+        .dir-btn { width: 100%; aspect-ratio: 1; border: none; border-radius: 10px; font-size: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .dir-btn:active { transform: scale(0.95); }
+        .dir-btn.up { grid-column: 2; grid-row: 1; background: var(--primary); color: white; }
+        .dir-btn.left { grid-column: 1; grid-row: 2; background: var(--primary); color: white; }
+        .dir-btn.center { grid-column: 2; grid-row: 2; background: #ddd; color: var(--gray); font-size: 12px; }
+        .dir-btn.right { grid-column: 3; grid-row: 2; background: var(--primary); color: white; }
+        .dir-btn.down { grid-column: 2; grid-row: 3; background: var(--primary); color: white; }
+        .dir-btn.cant { grid-column: 1/4; grid-row: 4; background: var(--error); color: white; aspect-ratio: auto; padding: 12px; font-size: 14px; margin-top: 6px; }
         
-        .check-icon { font-size: 64px; color: var(--success); margin-bottom: 16px; }
+        /* Results */
+        #resultsScreen { justify-content: center; align-items: center; padding: 16px; overflow-y: auto; }
+        .check-icon { font-size: 48px; color: var(--success); margin-bottom: 10px; }
+        .results-card { background: white; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 100%; max-width: 360px; margin-bottom: 16px; }
+        .results-card h2 { color: var(--primary); margin-bottom: 12px; font-size: 17px; }
+        .subj-id { font-size: 12px; color: var(--gray); margin-bottom: 12px; }
+        .eye-result { background: var(--gray-light); padding: 10px; border-radius: 8px; margin-bottom: 8px; }
+        .eye-result h4 { color: var(--primary-dark); margin-bottom: 5px; font-size: 14px; }
+        .eye-result p { font-size: 14px; margin: 2px 0; }
+        .eye-result .dec { font-size: 12px; color: var(--gray); }
+        .timestamp { font-size: 10px; color: var(--gray); margin-top: 12px; }
+        .btn-group { width: 100%; max-width: 360px; }
         
-        .results-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 24px;
-        }
-        
-        .results-card h2 { color: var(--primary); margin-bottom: 16px; font-size: 20px; }
-        .subject-id-display { font-size: 14px; color: var(--gray); margin-bottom: 16px; }
-        
-        .eye-result {
-            background: var(--gray-light);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-        
-        .eye-result h4 { color: var(--primary-dark); margin-bottom: 8px; font-size: 16px; }
-        .eye-result p { font-size: 16px; margin: 4px 0; }
-        .eye-result .decimal { font-size: 14px; color: var(--gray); }
-        .timestamp { font-size: 12px; color: var(--gray); margin-top: 16px; }
-        
-        .btn-group { width: 100%; max-width: 400px; }
-        .btn-group .btn { margin-bottom: 12px; }
-        
-        .save-status {
-            text-align: center;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-        
+        .save-status { text-align: center; padding: 8px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; }
         .save-status.saving { background: #E3F2FD; color: var(--primary); }
         .save-status.saved { background: #E8F5E9; color: var(--success); }
         .save-status.error { background: #FFEBEE; color: var(--error); }
         .save-status.queued { background: #FFF3E0; color: var(--accent); }
         
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
         .modal.active { display: flex; }
+        .modal-content { background: white; padding: 20px; border-radius: 10px; max-width: 280px; text-align: center; }
+        .modal-content h3 { color: var(--primary-dark); margin-bottom: 12px; font-size: 17px; }
+        .modal-content p { margin-bottom: 16px; line-height: 1.4; font-size: 13px; }
         
-        .modal-content {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            max-width: 320px;
-            text-align: center;
-        }
-        
-        .modal-content h3 { color: var(--primary-dark); margin-bottom: 16px; }
-        .modal-content p { margin-bottom: 20px; line-height: 1.6; }
-        
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .processing { animation: pulse 0.5s ease-in-out; }
-        
-        .pending-badge {
-            position: fixed;
-            top: 10px; right: 10px;
-            background: var(--accent);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            display: none;
-            z-index: 100;
-        }
-        
+        .pending-badge { position: fixed; top: 6px; right: 6px; background: var(--accent); color: white; padding: 2px 6px; border-radius: 8px; font-size: 10px; display: none; z-index: 100; }
         .pending-badge.show { display: block; }
-        
-        .optotype-badge {
-            position: fixed;
-            top: 10px; left: 10px;
-            background: var(--primary);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            z-index: 100;
-        }
+        .opto-badge { position: fixed; top: 6px; left: 6px; background: var(--primary); color: white; padding: 2px 6px; border-radius: 8px; font-size: 10px; z-index: 100; }
+        .dist-badge { background: var(--accent); padding: 1px 4px; border-radius: 4px; margin-left: 3px; }
     </style>
 </head>
 <body>
     <div id="pendingBadge" class="pending-badge"></div>
-    <div id="optotypeBadge" class="optotype-badge" style="display:none;"></div>
+    <div id="optoBadge" class="opto-badge" style="display:none;"></div>
 
-    <!-- Home Screen -->
+    <!-- Home -->
     <div id="homeScreen" class="screen active">
         <div class="logo">👁️</div>
         <div class="title">EyeScopeAI</div>
-        <div class="subtitle">Vision Screening Tool</div>
-        
-        <div id="calibrationStatus" class="calibration-status not-calibrated">⚠️ Screen not calibrated</div>
+        <div class="subtitle">Vision Screening v2.1</div>
+        <div id="calStatus" class="calibration-status not-calibrated">⚠️ Not calibrated</div>
         
         <div class="card">
-            <h3>📋 Instructions</h3>
+            <h3>📋 Protocol (2 meters)</h3>
             <ol>
-                <li>Calibrate screen first (one-time)</li>
-                <li>Select optotype (E or C)</li>
-                <li>Hold phone at 40cm distance</li>
-                <li>Swipe direction of gap/opening</li>
+                <li>Calibrate screen (one-time)</li>
+                <li>Mount phone at eye level</li>
+                <li>Student stands <strong>2m</strong> away</li>
+                <li>Tap direction of opening</li>
             </ol>
         </div>
         
-        <!-- Optotype Selector -->
         <div class="optotype-selector">
-            <label>Select Optotype</label>
+            <label>Optotype</label>
             <div class="optotype-options">
-                <div class="optotype-option selected" data-type="E" onclick="selectOptotype('E')">
+                <div class="optotype-option selected" data-type="E" onclick="selectOpto('E')">
                     <span class="symbol">E</span>
                     <div class="name">Tumbling E</div>
-                    <div class="desc">ETDRS Standard</div>
+                    <div class="desc">ETDRS</div>
                 </div>
-                <div class="optotype-option" data-type="C" onclick="selectOptotype('C')">
-                    <div class="landolt-c-preview"></div>
+                <div class="optotype-option" data-type="C" onclick="selectOpto('C')">
+                    <div class="ring-preview c"></div>
                     <div class="name">Landolt C</div>
                     <div class="desc">ISO 8596</div>
+                </div>
+                <div class="optotype-option" data-type="U" onclick="selectOpto('U')">
+                    <div class="square-u-preview"></div>
+                    <div class="name">Custom U</div>
+                    <div class="desc">Square</div>
                 </div>
             </div>
         </div>
         
         <div class="input-group">
-            <label for="subjectId">Subject ID <strong style="color: var(--error);">*</strong></label>
-            <input type="text" id="subjectId" placeholder="Enter Subject ID (required)">
+            <label>Subject ID *</label>
+            <input type="text" id="subjectId" placeholder="Enter Subject ID">
         </div>
         
-        <button class="btn btn-primary" onclick="startTest()">Start Vision Test</button>
-        <button class="btn btn-outline" onclick="showCalibration()">📐 Calibrate Screen</button>
+        <button class="btn btn-primary" onclick="startTest()">Start Test</button>
+        <button class="btn btn-outline" onclick="showCal()">📐 Calibrate</button>
         
-        <div class="version">v1.3.0 | ICMR STS 2025</div>
+        <div class="version">v2.1.0 | 2m | ICMR STS 2025</div>
         <div id="syncStatus" class="sync-status online">● Online</div>
     </div>
     
-    <!-- Calibration Screen -->
+    <!-- Calibration -->
     <div id="calibrationScreen" class="screen">
-        <div class="calibration-title">📐 Screen Calibration</div>
-        <div class="calibration-instruction">Place your <strong>3cm × 3cm</strong> card on the box below and adjust until it matches exactly.</div>
+        <div class="cal-title">📐 Calibration</div>
+        <div class="cal-inst">Place <strong>3cm × 3cm</strong> card on box. Adjust to match.</div>
         
-        <div class="calibration-box-container">
-            <div id="calibrationBox" class="calibration-box"></div>
-            <div class="calibration-label">3 × 3 cm</div>
+        <div class="cal-box-wrap">
+            <div id="calBox" class="cal-box"></div>
+            <div class="cal-label">3×3 cm</div>
         </div>
         
-        <div class="calibration-controls">
-            <button onclick="adjustCalibration(-5)">−</button>
-            <div class="calibration-size" id="calibrationSize">100 px</div>
-            <button onclick="adjustCalibration(5)">+</button>
+        <div class="cal-controls">
+            <button onclick="adjCal(-10)">−</button>
+            <div class="cal-size" id="calSize">150 px<br><span id="pxCm" style="font-size:11px;color:var(--gray)">50.0 px/cm</span></div>
+            <button onclick="adjCal(10)">+</button>
         </div>
         
-        <div class="calibration-hint">Adjust until the box matches your card perfectly</div>
+        <div class="fine-tune">
+            <button class="btn btn-outline btn-small" onclick="adjCal(-1)">-1</button>
+            <button class="btn btn-outline btn-small" onclick="adjCal(1)">+1</button>
+        </div>
         
-        <button class="btn btn-success" onclick="saveCalibration()">✓ Done - Save Calibration</button>
-        <button class="btn btn-outline btn-small" onclick="showScreen('home')">Cancel</button>
+        <button class="btn btn-success" onclick="saveCal()">✓ Save</button>
+        <button class="btn btn-outline btn-small" onclick="showScr('home')">Cancel</button>
     </div>
     
-    <!-- Distance Screen -->
+    <!-- Distance -->
     <div id="distanceScreen" class="screen">
-        <div class="distance-icon">📏</div>
-        <div class="distance-title">Testing Distance</div>
-        <div class="distance-value">40 cm</div>
-        <div class="distance-instruction">Hold the phone at <strong>arm's length</strong> (40cm from eyes). Use a string or ruler to measure.</div>
+        <div class="dist-icon">📏</div>
+        <div class="dist-title">Test Distance</div>
+        <div class="dist-value">2 m</div>
+        <div class="dist-inst">Position student <strong>2 meters</strong> from phone screen.</div>
         
-        <div class="distance-tips">
-            <h4>💡 Tips</h4>
+        <div class="dist-tips">
+            <h4>💡 Setup</h4>
             <ul>
-                <li>Keep phone still during test</li>
-                <li>Ensure good lighting</li>
-                <li>Cover one eye completely</li>
-                <li id="optotypeHint">Swipe where the E points</li>
+                <li>Phone at eye level</li>
+                <li>Mark 2m on floor</li>
+                <li>Cover one eye fully</li>
+                <li id="optoHint">Tap direction of E</li>
             </ul>
         </div>
         
-        <button class="btn btn-primary" onclick="beginTest()">I'm Ready - Start Test</button>
+        <button class="btn btn-primary" onclick="beginTest()">Start</button>
     </div>
     
-    <!-- Test Screen -->
+    <!-- Test -->
     <div id="testScreen" class="screen">
         <div class="test-header">
-            <span class="eye-indicator" id="eyeIndicator">Right Eye (OD)</span>
-            <span class="progress-text" id="progressText">Line 1/11 | Trial 1/3</span>
+            <span class="eye-ind" id="eyeInd">Right Eye (OD)</span>
+            <span class="prog-text" id="progText">Line 1/11</span>
+        </div>
+        <div class="acuity-bar" id="acuityBar">LogMAR 1.0 | 6/60 | 29.1mm</div>
+        
+        <div class="test-area">
+            <div class="eye-overlay" id="eyeOverlay">RIGHT EYE</div>
+            <div class="tumbling-e" id="tumbE">E</div>
+            <div class="landolt-c" id="landC" style="display:none;"></div>
+            <div class="square-u" id="squareU" style="display:none;"></div>
         </div>
         
-        <div class="acuity-display" id="acuityDisplay">LogMAR: 1.0 | Snellen: 6/60</div>
-        
-        <div class="test-area" id="testArea">
-            <span class="direction-hint hint-up">↑</span>
-            <span class="direction-hint hint-down">↓</span>
-            <span class="direction-hint hint-left">←</span>
-            <span class="direction-hint hint-right">→</span>
-            <div class="tumbling-e" id="tumblingE">E</div>
-            <div class="landolt-c" id="landoltC" style="display:none;"></div>
-        </div>
-        
-        <div class="instructions-bar" id="instructionsBar">Swipe in the direction the E is pointing</div>
         <div class="feedback-bar" id="feedbackBar"></div>
+        
+        <div class="dir-buttons">
+            <button class="dir-btn up" onclick="respond(90)">↑</button>
+            <button class="dir-btn left" onclick="respond(180)">←</button>
+            <button class="dir-btn center" id="trialInfo">1/3</button>
+            <button class="dir-btn right" onclick="respond(0)">→</button>
+            <button class="dir-btn down" onclick="respond(270)">↓</button>
+            <button class="dir-btn cant" onclick="respond(-1)">✕ Can't See</button>
+        </div>
     </div>
     
-    <!-- Results Screen -->
+    <!-- Results -->
     <div id="resultsScreen" class="screen">
         <div class="check-icon">✓</div>
-        <div class="title">Test Complete</div>
-        
-        <div id="saveStatus" class="save-status saving">⏳ Saving to database...</div>
+        <div class="title">Complete</div>
+        <div id="saveStatus" class="save-status saving">⏳ Saving...</div>
         
         <div class="results-card">
-            <h2>Your Results</h2>
-            <div class="subject-id-display" id="subjectIdDisplay">Subject ID: ---</div>
-            
+            <h2>Results</h2>
+            <div class="subj-id" id="subjIdDisp">Subject: ---</div>
             <div class="eye-result">
                 <h4>Right Eye (OD)</h4>
-                <p id="rightLogMAR">LogMAR: ---</p>
-                <p id="rightSnellen">Snellen: ---</p>
-                <p class="decimal" id="rightDecimal">Decimal VA: ---</p>
+                <p id="rLogMAR">LogMAR: ---</p>
+                <p id="rSnellen">Snellen: ---</p>
+                <p class="dec" id="rDec">Decimal: ---</p>
             </div>
-            
             <div class="eye-result">
                 <h4>Left Eye (OS)</h4>
-                <p id="leftLogMAR">LogMAR: ---</p>
-                <p id="leftSnellen">Snellen: ---</p>
-                <p class="decimal" id="leftDecimal">Decimal VA: ---</p>
+                <p id="lLogMAR">LogMAR: ---</p>
+                <p id="lSnellen">Snellen: ---</p>
+                <p class="dec" id="lDec">Decimal: ---</p>
             </div>
-            
-            <div class="timestamp" id="timestamp">Tested: ---</div>
+            <div class="timestamp" id="timeStamp">Tested: ---</div>
         </div>
         
         <div class="btn-group">
-            <button class="btn btn-success" onclick="restartTest()">✓ Next Patient</button>
-            <button class="btn btn-primary" onclick="retrySync()" id="retryBtn" style="display:none;">↻ Retry Upload</button>
-            <button class="btn btn-accent" onclick="shareResults()">Share Results</button>
+            <button class="btn btn-success" onclick="restart()">✓ Next Patient</button>
+            <button class="btn btn-primary" onclick="retrySync()" id="retryBtn" style="display:none;">↻ Retry</button>
+            <button class="btn btn-outline" onclick="share()">Share</button>
         </div>
     </div>
     
     <!-- Modal -->
-    <div id="transitionModal" class="modal">
+    <div id="modal" class="modal">
         <div class="modal-content">
-            <h3>Right Eye Complete</h3>
-            <p id="transitionMessage">Now cover your RIGHT eye for LEFT eye test.</p>
-            <button class="btn btn-primary" onclick="continueToLeftEye()">Continue</button>
+            <h3>Right Eye Done</h3>
+            <p id="modalMsg">Now test LEFT eye.</p>
+            <button class="btn btn-primary" onclick="nextEye()">Continue</button>
         </div>
     </div>
 
     <script>
-        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyPQ_ajsygSEIVsVcl_oRTij7iXISbeRc-BPUt3se5or8vFNeuwQ60g9IE1NQ8W1dcrqw/exec';
-        const STORAGE_KEY = 'eyescopeai_pending';
-        const CALIBRATION_KEY = 'eyescopeai_calibration';
-        const OPTOTYPE_KEY = 'eyescopeai_optotype';
+        const BACKEND = 'https://script.google.com/macros/s/AKfycbyPQ_ajsygSEIVsVcl_oRTij7iXISbeRc-BPUt3se5or8vFNeuwQ60g9IE1NQ8W1dcrqw/exec';
+        const STORE_KEY = 'eyescopeai_pending';
+        const CAL_KEY = 'eyescopeai_cal';
+        const OPTO_KEY = 'eyescopeai_opto';
         
-        const CONFIG = {
-            MAX_WRONG_CONSECUTIVE: 2,
-            TRIALS_PER_LINE: 3,
-            MIN_CORRECT_TO_PASS: 2,
-            FEEDBACK_DELAY: 400,
-            SWIPE_THRESHOLD: 50,
-            TEST_DISTANCE_CM: 40,
-            CALIBRATION_CARD_CM: 3
-        };
+        const CFG = { MAX_WRONG: 2, TRIALS: 3, MIN_PASS: 2, DELAY: 250, DIST_CM: 200, CAL_CM: 3 };
         
-        const LOGMAR_VALUES = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0];
-        const SNELLEN_VALUES = ['6/60', '6/48', '6/38', '6/30', '6/24', '6/19', '6/15', '6/12', '6/9.5', '6/7.5', '6/6'];
-        const OPTOTYPE_SIZE_MM = [29.1, 23.1, 18.4, 14.6, 11.6, 9.2, 7.3, 5.8, 4.6, 3.7, 2.9];
+        const LOGMAR = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0];
+        const SNELLEN = ['6/60','6/48','6/38','6/30','6/24','6/19','6/15','6/12','6/9.5','6/7.5','6/6'];
+        const SIZE_MM = [29.1, 23.1, 18.4, 14.6, 11.6, 9.2, 7.3, 5.8, 4.6, 3.7, 2.9]; // at 2m
         
-        const DIRECTIONS = { RIGHT: 0, UP: 90, LEFT: 180, DOWN: 270 };
-        const DIR_ARRAY = [0, 90, 180, 270];
-        const DIR_NAMES = { 0: 'right', 90: 'up', 180: 'left', 270: 'down' };
+        const DIR = { R: 0, U: 90, L: 180, D: 270 };
+        const DIRS = [0, 90, 180, 270];
+        const DNAME = { 0:'right', 90:'up', 180:'left', 270:'down' };
         
-        let selectedOptotype = 'E';
+        let opto = 'E';
+        let cal = { pxCm: null, boxPx: 150 };
+        let st = { subj:'', isRight:true, line:0, trial:0, correct:0, consWrong:0, curDir:0, rLog:-1, lLog:-1, busy:false };
         
-        let calibration = {
-            pixelsPerCm: null,
-            calibrationBoxPx: 100,
-            deviceModel: navigator.userAgent,
-            calibratedAt: null
-        };
-        
-        let state = {
-            subjectId: '',
-            isRightEye: true,
-            currentLine: 0,
-            trialOnLine: 0,
-            correctOnLine: 0,
-            consecutiveWrong: 0,
-            currentDirection: 0,
-            rightEyeLogMAR: -1,
-            leftEyeLogMAR: -1,
-            isProcessing: false
-        };
-        
-        let touchStartX = 0, touchStartY = 0;
-        
-        const screens = {
-            home: document.getElementById('homeScreen'),
-            calibration: document.getElementById('calibrationScreen'),
-            distance: document.getElementById('distanceScreen'),
-            test: document.getElementById('testScreen'),
-            results: document.getElementById('resultsScreen')
-        };
-        
-        const elements = {
-            subjectIdInput: document.getElementById('subjectId'),
-            calibrationStatus: document.getElementById('calibrationStatus'),
-            calibrationBox: document.getElementById('calibrationBox'),
-            calibrationSize: document.getElementById('calibrationSize'),
-            eyeIndicator: document.getElementById('eyeIndicator'),
-            progressText: document.getElementById('progressText'),
-            acuityDisplay: document.getElementById('acuityDisplay'),
-            testArea: document.getElementById('testArea'),
-            tumblingE: document.getElementById('tumblingE'),
-            landoltC: document.getElementById('landoltC'),
+        const scr = { home: document.getElementById('homeScreen'), cal: document.getElementById('calibrationScreen'), dist: document.getElementById('distanceScreen'), test: document.getElementById('testScreen'), res: document.getElementById('resultsScreen') };
+        const el = {
+            subj: document.getElementById('subjectId'),
+            calStatus: document.getElementById('calStatus'),
+            calBox: document.getElementById('calBox'),
+            calSize: document.getElementById('calSize'),
+            pxCm: document.getElementById('pxCm'),
+            eyeInd: document.getElementById('eyeInd'),
+            progText: document.getElementById('progText'),
+            acuityBar: document.getElementById('acuityBar'),
+            tumbE: document.getElementById('tumbE'),
+            landC: document.getElementById('landC'),
+            squareU: document.getElementById('squareU'),
+            eyeOverlay: document.getElementById('eyeOverlay'),
             feedbackBar: document.getElementById('feedbackBar'),
-            instructionsBar: document.getElementById('instructionsBar'),
-            transitionModal: document.getElementById('transitionModal'),
-            transitionMessage: document.getElementById('transitionMessage'),
+            trialInfo: document.getElementById('trialInfo'),
+            modal: document.getElementById('modal'),
+            modalMsg: document.getElementById('modalMsg'),
             saveStatus: document.getElementById('saveStatus'),
             retryBtn: document.getElementById('retryBtn'),
             syncStatus: document.getElementById('syncStatus'),
             pendingBadge: document.getElementById('pendingBadge'),
-            optotypeBadge: document.getElementById('optotypeBadge'),
-            optotypeHint: document.getElementById('optotypeHint')
+            optoBadge: document.getElementById('optoBadge'),
+            optoHint: document.getElementById('optoHint')
         };
         
-        // Optotype Selection
-        function selectOptotype(type) {
-            selectedOptotype = type;
-            localStorage.setItem(OPTOTYPE_KEY, type);
-            document.querySelectorAll('.optotype-option').forEach(opt => {
-                opt.classList.toggle('selected', opt.dataset.type === type);
-            });
-            elements.optotypeHint.textContent = type === 'E' ? 'Swipe where the E points' : 'Swipe where the gap is';
+        // Optotype
+        function selectOpto(t) {
+            opto = t;
+            localStorage.setItem(OPTO_KEY, t);
+            document.querySelectorAll('.optotype-option').forEach(o => o.classList.toggle('selected', o.dataset.type === t));
+            const h = { E:'Tap direction of E', C:'Tap direction of gap', U:'Tap direction of opening' };
+            el.optoHint.textContent = h[t];
         }
-        
-        function loadOptotypePreference() {
-            const saved = localStorage.getItem(OPTOTYPE_KEY);
-            if (saved) selectOptotype(saved);
-        }
+        function loadOpto() { const s = localStorage.getItem(OPTO_KEY); if (s && 'ECU'.includes(s)) selectOpto(s); }
         
         // Calibration
-        function loadCalibration() {
-            try {
-                const saved = localStorage.getItem(CALIBRATION_KEY);
-                if (saved) {
-                    calibration = JSON.parse(saved);
-                    updateCalibrationStatus();
-                    return true;
-                }
-            } catch (e) {}
-            return false;
+        function loadCal() { try { const s = localStorage.getItem(CAL_KEY); if (s) { cal = JSON.parse(s); updCalStatus(); return true; } } catch(e){} return false; }
+        function saveCal() { cal.pxCm = cal.boxPx / CFG.CAL_CM; localStorage.setItem(CAL_KEY, JSON.stringify(cal)); updCalStatus(); showScr('home'); }
+        function updCalStatus() {
+            if (cal.pxCm) { el.calStatus.className = 'calibration-status calibrated'; el.calStatus.textContent = `✓ ${cal.pxCm.toFixed(1)} px/cm`; }
+            else { el.calStatus.className = 'calibration-status not-calibrated'; el.calStatus.textContent = '⚠️ Not calibrated'; }
+        }
+        function showCal() { showScr('cal'); updCalBox(); }
+        function adjCal(d) { cal.boxPx = Math.max(50, Math.min(400, cal.boxPx + d)); updCalBox(); }
+        function updCalBox() {
+            el.calBox.style.width = cal.boxPx + 'px';
+            el.calBox.style.height = cal.boxPx + 'px';
+            el.calSize.innerHTML = cal.boxPx + ' px<br><span style="font-size:11px;color:var(--gray)">' + (cal.boxPx/CFG.CAL_CM).toFixed(1) + ' px/cm</span>';
         }
         
-        function saveCalibration() {
-            calibration.pixelsPerCm = calibration.calibrationBoxPx / CONFIG.CALIBRATION_CARD_CM;
-            calibration.calibratedAt = new Date().toISOString();
-            localStorage.setItem(CALIBRATION_KEY, JSON.stringify(calibration));
-            updateCalibrationStatus();
-            showScreen('home');
+        // Screen
+        function showScr(n) {
+            Object.values(scr).forEach(s => s.classList.remove('active'));
+            scr[n].classList.add('active');
+            if (n === 'test') {
+                const nm = { E:'Tumbling E', C:'Landolt C', U:'Custom U' };
+                el.optoBadge.innerHTML = nm[opto] + ' <span class="dist-badge">2m</span>';
+                el.optoBadge.style.display = 'block';
+            } else { el.optoBadge.style.display = 'none'; }
         }
+        function showModal(b) { el.modal.classList.toggle('active', b); }
         
-        function updateCalibrationStatus() {
-            if (calibration.pixelsPerCm) {
-                elements.calibrationStatus.className = 'calibration-status calibrated';
-                elements.calibrationStatus.textContent = `✓ Calibrated (${calibration.pixelsPerCm.toFixed(1)} px/cm)`;
-            } else {
-                elements.calibrationStatus.className = 'calibration-status not-calibrated';
-                elements.calibrationStatus.textContent = '⚠️ Screen not calibrated';
-            }
-        }
-        
-        function showCalibration() {
-            showScreen('calibration');
-            updateCalibrationBox();
-        }
-        
-        function adjustCalibration(delta) {
-            calibration.calibrationBoxPx = Math.max(50, Math.min(300, calibration.calibrationBoxPx + delta));
-            updateCalibrationBox();
-        }
-        
-        function updateCalibrationBox() {
-            elements.calibrationBox.style.width = calibration.calibrationBoxPx + 'px';
-            elements.calibrationBox.style.height = calibration.calibrationBoxPx + 'px';
-            elements.calibrationSize.textContent = calibration.calibrationBoxPx + ' px';
-        }
-        
-        // Screen Management
-        function showScreen(screenName) {
-            Object.values(screens).forEach(s => s.classList.remove('active'));
-            screens[screenName].classList.add('active');
-            
-            if (screenName === 'test') {
-                elements.optotypeBadge.textContent = selectedOptotype === 'E' ? 'Tumbling E' : 'Landolt C';
-                elements.optotypeBadge.style.display = 'block';
-            } else {
-                elements.optotypeBadge.style.display = 'none';
-            }
-        }
-        
-        function showModal(show) {
-            elements.transitionModal.classList.toggle('active', show);
-        }
-        
-        // Test Flow
+        // Test
         function startTest() {
-            const subjectId = elements.subjectIdInput.value.trim();
-            if (!subjectId) {
-                elements.subjectIdInput.classList.add('required-field');
-                elements.subjectIdInput.focus();
-                alert('Please enter Subject ID');
-                return;
-            }
-            
-            if (!calibration.pixelsPerCm) {
-                if (!confirm('Screen not calibrated. Continue anyway?')) {
-                    showCalibration();
-                    return;
-                }
-                calibration.pixelsPerCm = 38;
-            }
-            
-            elements.subjectIdInput.classList.remove('required-field');
-            state.subjectId = subjectId;
-            elements.instructionsBar.textContent = selectedOptotype === 'E' 
-                ? 'Swipe in the direction the E is pointing' 
-                : 'Swipe in the direction of the gap';
-            showScreen('distance');
+            const s = el.subj.value.trim();
+            if (!s) { el.subj.classList.add('error'); el.subj.focus(); alert('Enter Subject ID'); return; }
+            if (!cal.pxCm) { alert('Calibrate first!'); showCal(); return; }
+            el.subj.classList.remove('error');
+            st.subj = s;
+            showScr('dist');
         }
-        
-        function beginTest() {
-            resetTestState();
-            state.isRightEye = true;
-            showScreen('test');
-            setupTouchListeners();
-            presentNextTrial();
-        }
-        
-        function resetTestState() {
-            state.currentLine = 0;
-            state.trialOnLine = 0;
-            state.correctOnLine = 0;
-            state.consecutiveWrong = 0;
-            state.isProcessing = false;
-        }
-        
-        function continueToLeftEye() {
-            showModal(false);
-            state.isRightEye = false;
-            resetTestState();
-            presentNextTrial();
-        }
-        
-        function restartTest() {
-            state.rightEyeLogMAR = -1;
-            state.leftEyeLogMAR = -1;
-            elements.subjectIdInput.value = '';
-            showScreen('home');
-        }
+        function beginTest() { resetSt(); st.isRight = true; showScr('test'); present(); }
+        function resetSt() { st.line = 0; st.trial = 0; st.correct = 0; st.consWrong = 0; st.busy = false; }
+        function nextEye() { showModal(false); st.isRight = false; resetSt(); present(); }
+        function restart() { st.rLog = -1; st.lLog = -1; el.subj.value = ''; showScr('home'); }
         
         // Sizing
-        // Font size compensation: fontSize doesn't equal character height
-        // For Arial Black, cap height is ~0.72 of font size
-        // So we divide by 0.72 to get correct physical height
-        const FONT_CAP_HEIGHT_RATIO = 0.72;
+        const CAP_RATIO = 0.72;
+        function getSizePx(i) { return (SIZE_MM[i] / 10) * cal.pxCm; }
+        function getFontPx(i) { return getSizePx(i) / CAP_RATIO; }
         
-        function getOptotypeSizePx(lineIndex) {
-            const sizeMm = OPTOTYPE_SIZE_MM[lineIndex];
-            const targetSizePx = (sizeMm / 10) * calibration.pixelsPerCm;
-            return targetSizePx; // For Landolt C (direct width/height)
-        }
-        
-        function getFontSizePx(lineIndex) {
-            const sizeMm = OPTOTYPE_SIZE_MM[lineIndex];
-            const targetHeightPx = (sizeMm / 10) * calibration.pixelsPerCm;
-            // Compensate for font cap height ratio
-            return targetHeightPx / FONT_CAP_HEIGHT_RATIO;
-        }
-        
-        // Trial Presentation
-        function presentNextTrial() {
-            elements.eyeIndicator.textContent = state.isRightEye ? 'Right Eye (OD)' : 'Left Eye (OS)';
-            elements.progressText.textContent = `Line ${state.currentLine + 1}/${LOGMAR_VALUES.length} | Trial ${state.trialOnLine + 1}/${CONFIG.TRIALS_PER_LINE}`;
+        // Present
+        function present() {
+            el.eyeInd.textContent = st.isRight ? 'Right Eye (OD)' : 'Left Eye (OS)';
+            el.eyeOverlay.textContent = st.isRight ? 'RIGHT EYE' : 'LEFT EYE';
+            el.eyeOverlay.style.background = st.isRight ? 'var(--primary)' : 'var(--accent)';
+            el.progText.textContent = `Line ${st.line+1}/${LOGMAR.length}`;
+            el.trialInfo.textContent = `${st.trial+1}/${CFG.TRIALS}`;
+            el.acuityBar.textContent = `LogMAR ${LOGMAR[st.line].toFixed(1)} | ${SNELLEN[st.line]} | ${SIZE_MM[st.line]}mm`;
             
-            const targetMm = OPTOTYPE_SIZE_MM[state.currentLine];
-            elements.acuityDisplay.textContent = `LogMAR: ${LOGMAR_VALUES[state.currentLine].toFixed(1)} | Snellen: ${SNELLEN_VALUES[state.currentLine]} | Target: ${targetMm}mm`;
+            st.curDir = DIRS[Math.floor(Math.random()*4)];
             
-            state.currentDirection = DIR_ARRAY[Math.floor(Math.random() * 4)];
+            el.tumbE.style.display = 'none';
+            el.landC.style.display = 'none';
+            el.squareU.style.display = 'none';
             
-            if (selectedOptotype === 'E') {
-                const fontSizePx = getFontSizePx(state.currentLine);
-                elements.tumblingE.style.display = 'block';
-                elements.landoltC.style.display = 'none';
-                elements.tumblingE.style.fontSize = fontSizePx + 'px';
-                elements.tumblingE.style.transform = `rotate(${-state.currentDirection}deg)`;
+            if (opto === 'E') {
+                el.tumbE.style.display = 'block';
+                el.tumbE.style.fontSize = getFontPx(st.line) + 'px';
+                el.tumbE.style.transform = `rotate(${-st.curDir}deg)`;
+            } else if (opto === 'C') {
+                const sz = getSizePx(st.line);
+                el.landC.style.display = 'block';
+                el.landC.style.width = sz + 'px';
+                el.landC.style.height = sz + 'px';
+                el.landC.className = 'landolt-c gap-' + DNAME[st.curDir];
+                el.landC.innerHTML = '<div class="gap"></div>';
             } else {
-                const sizePx = getOptotypeSizePx(state.currentLine);
-                elements.tumblingE.style.display = 'none';
-                elements.landoltC.style.display = 'block';
-                elements.landoltC.style.width = sizePx + 'px';
-                elements.landoltC.style.height = sizePx + 'px';
-                elements.landoltC.className = 'landolt-c gap-' + DIR_NAMES[state.currentDirection];
-                elements.landoltC.innerHTML = '<div class="gap"></div>';
+                const sz = getSizePx(st.line);
+                el.squareU.style.display = 'block';
+                el.squareU.style.width = sz + 'px';
+                el.squareU.style.height = sz + 'px';
+                el.squareU.className = 'square-u gap-' + DNAME[st.curDir];
+                el.squareU.innerHTML = '<div class="inner"></div>';
             }
-            
-            elements.feedbackBar.className = 'feedback-bar';
+            el.feedbackBar.className = 'feedback-bar';
         }
         
-        // Touch Detection
-        let touchListenersAdded = false;
-        
-        function setupTouchListeners() {
-            if (touchListenersAdded) return;
-            touchListenersAdded = true;
-            elements.testArea.addEventListener('touchstart', e => { if (!state.isProcessing) { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }}, { passive: true });
-            elements.testArea.addEventListener('touchend', e => { if (!state.isProcessing) processSwipe(e.changedTouches[0].clientX - touchStartX, e.changedTouches[0].clientY - touchStartY); }, { passive: true });
-            elements.testArea.addEventListener('mousedown', e => { if (!state.isProcessing) { touchStartX = e.clientX; touchStartY = e.clientY; }});
-            elements.testArea.addEventListener('mouseup', e => { if (!state.isProcessing) processSwipe(e.clientX - touchStartX, e.clientY - touchStartY); });
+        // Beep sound
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function beep(freq = 800, dur = 50) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.frequency.value = freq;
+            gain.gain.value = 0.3;
+            osc.start();
+            setTimeout(() => { osc.stop(); }, dur);
         }
         
-        function processSwipe(diffX, diffY) {
-            const absX = Math.abs(diffX), absY = Math.abs(diffY);
-            if (Math.max(absX, absY) < CONFIG.SWIPE_THRESHOLD) return;
-            const dir = absX > absY ? (diffX > 0 ? DIRECTIONS.RIGHT : DIRECTIONS.LEFT) : (diffY > 0 ? DIRECTIONS.DOWN : DIRECTIONS.UP);
-            processResponse(dir);
-        }
-        
-        function processResponse(userDirection) {
-            state.isProcessing = true;
-            const isCorrect = userDirection === state.currentDirection;
+        // Response
+        function respond(d) {
+            if (st.busy) return;
+            st.busy = true;
+            beep();
             
-            elements.feedbackBar.className = 'feedback-bar ' + (isCorrect ? 'correct' : 'incorrect');
-            (selectedOptotype === 'E' ? elements.tumblingE : elements.landoltC).classList.add('processing');
+            const ok = (d === st.curDir);
+            const cant = (d === -1);
             
-            if (isCorrect) { state.correctOnLine++; state.consecutiveWrong = 0; }
-            else { state.consecutiveWrong++; }
+            el.feedbackBar.className = 'feedback-bar ' + (ok ? 'correct' : 'incorrect');
             
-            state.trialOnLine++;
+            if (ok) { st.correct++; st.consWrong = 0; }
+            else { st.consWrong++; }
             
-            if (state.consecutiveWrong >= CONFIG.MAX_WRONG_CONSECUTIVE && state.currentLine > 0) {
-                finishCurrentEye(state.currentLine - 1);
+            st.trial++;
+            
+            if (cant || (st.consWrong >= CFG.MAX_WRONG && st.line > 0)) {
+                finish(st.line > 0 ? st.line - 1 : 0);
                 return;
             }
             
-            if (state.trialOnLine >= CONFIG.TRIALS_PER_LINE) {
-                if (state.correctOnLine >= CONFIG.MIN_CORRECT_TO_PASS) {
-                    state.currentLine++;
-                    if (state.currentLine >= LOGMAR_VALUES.length) { finishCurrentEye(LOGMAR_VALUES.length - 1); return; }
-                } else {
-                    finishCurrentEye(state.currentLine > 0 ? state.currentLine - 1 : 0);
-                    return;
-                }
-                state.trialOnLine = 0;
-                state.correctOnLine = 0;
+            if (st.trial >= CFG.TRIALS) {
+                if (st.correct >= CFG.MIN_PASS) {
+                    st.line++;
+                    if (st.line >= LOGMAR.length) { finish(LOGMAR.length - 1); return; }
+                } else { finish(st.line > 0 ? st.line - 1 : 0); return; }
+                st.trial = 0;
+                st.correct = 0;
             }
             
-            setTimeout(() => {
-                state.isProcessing = false;
-                (selectedOptotype === 'E' ? elements.tumblingE : elements.landoltC).classList.remove('processing');
-                presentNextTrial();
-            }, CONFIG.FEEDBACK_DELAY);
+            setTimeout(() => { st.busy = false; present(); }, CFG.DELAY);
         }
         
-        function finishCurrentEye(finalLine) {
-            const logMAR = LOGMAR_VALUES[finalLine];
-            if (state.isRightEye) {
-                state.rightEyeLogMAR = logMAR;
+        function finish(line) {
+            const log = LOGMAR[line];
+            if (st.isRight) {
+                st.rLog = log;
                 setTimeout(() => {
-                    elements.transitionMessage.innerHTML = `Right Eye: <strong>${SNELLEN_VALUES[finalLine]}</strong> (LogMAR ${logMAR.toFixed(1)})<br><br>Now cover your <strong>RIGHT</strong> eye for <strong>LEFT</strong> eye test.`;
+                    el.modalMsg.innerHTML = `Right: <strong>${SNELLEN[line]}</strong> (${log.toFixed(1)})<br><br>Now test <strong>LEFT</strong> eye.`;
                     showModal(true);
-                }, CONFIG.FEEDBACK_DELAY);
+                }, CFG.DELAY);
             } else {
-                state.leftEyeLogMAR = logMAR;
-                showResultsAndSave();
+                st.lLog = log;
+                showResults();
             }
         }
         
         // Data
-        function buildResultData() {
-            const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
-            const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
+        function buildData() {
+            const ri = lineFromLog(st.rLog), li = lineFromLog(st.lLog);
+            const nm = { E:'Tumbling E', C:'Landolt C', U:'Custom U' };
             return {
                 timestamp: new Date().toISOString(),
-                subject_id: state.subjectId,
-                right_eye_logmar: state.rightEyeLogMAR.toFixed(1),
-                right_eye_snellen: SNELLEN_VALUES[rightLine],
-                right_eye_decimal: Math.pow(10, -state.rightEyeLogMAR).toFixed(2),
-                left_eye_logmar: state.leftEyeLogMAR.toFixed(1),
-                left_eye_snellen: SNELLEN_VALUES[leftLine],
-                left_eye_decimal: Math.pow(10, -state.leftEyeLogMAR).toFixed(2),
-                test_distance_cm: CONFIG.TEST_DISTANCE_CM,
-                screen_ppi: calibration.pixelsPerCm ? (calibration.pixelsPerCm * 2.54).toFixed(1) : 'uncalibrated',
+                subject_id: st.subj,
+                right_eye_logmar: st.rLog.toFixed(1),
+                right_eye_snellen: SNELLEN[ri],
+                right_eye_decimal: Math.pow(10, -st.rLog).toFixed(2),
+                left_eye_logmar: st.lLog.toFixed(1),
+                left_eye_snellen: SNELLEN[li],
+                left_eye_decimal: Math.pow(10, -st.lLog).toFixed(2),
+                test_distance_cm: CFG.DIST_CM,
+                screen_ppi: cal.pxCm ? (cal.pxCm * 2.54).toFixed(1) : 'uncal',
                 device_info: navigator.userAgent.substring(0, 100),
-                optotype_used: selectedOptotype === 'E' ? 'Tumbling E' : 'Landolt C'
+                optotype_used: nm[opto]
             };
         }
-        
-        function getLineFromLogMAR(logMAR) {
-            for (let i = 0; i < LOGMAR_VALUES.length; i++) if (Math.abs(LOGMAR_VALUES[i] - logMAR) < 0.05) return i;
-            return 0;
-        }
+        function lineFromLog(l) { for (let i = 0; i < LOGMAR.length; i++) if (Math.abs(LOGMAR[i] - l) < 0.05) return i; return 0; }
         
         // Backend
-        function updateOnlineStatus() {
-            const isOnline = navigator.onLine;
-            elements.syncStatus.className = 'sync-status ' + (isOnline ? 'online' : 'offline');
-            elements.syncStatus.textContent = isOnline ? '● Online' : '● Offline';
-            if (isOnline) syncPendingData();
+        function updOnline() {
+            const on = navigator.onLine;
+            el.syncStatus.className = 'sync-status ' + (on ? 'online' : 'offline');
+            el.syncStatus.textContent = on ? '● Online' : '● Offline';
+            if (on) syncPending();
         }
+        window.addEventListener('online', updOnline);
+        window.addEventListener('offline', updOnline);
         
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
+        function getPending() { try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch { return []; } }
+        function savePending(d) { localStorage.setItem(STORE_KEY, JSON.stringify(d)); updBadge(); }
+        function updBadge() { const p = getPending(); el.pendingBadge.textContent = p.length + ' pending'; el.pendingBadge.classList.toggle('show', p.length > 0); }
         
-        function getPendingData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }}
-        function savePendingData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); updatePendingBadge(); }
-        
-        function updatePendingBadge() {
-            const pending = getPendingData();
-            elements.pendingBadge.textContent = `${pending.length} pending`;
-            elements.pendingBadge.classList.toggle('show', pending.length > 0);
-        }
-        
-        async function saveToBackend(data) {
-            elements.saveStatus.className = 'save-status saving';
-            elements.saveStatus.textContent = '⏳ Saving...';
-            elements.retryBtn.style.display = 'none';
+        async function saveToBackend(d) {
+            el.saveStatus.className = 'save-status saving';
+            el.saveStatus.textContent = '⏳ Saving...';
+            el.retryBtn.style.display = 'none';
             
-            const pending = getPendingData();
-            const dataWithId = { ...data, _tempId: Date.now() };
-            pending.push(dataWithId);
-            savePendingData(pending);
+            const p = getPending();
+            const dId = { ...d, _id: Date.now() };
+            p.push(dId);
+            savePending(p);
             
-            if (!navigator.onLine) {
-                elements.saveStatus.className = 'save-status queued';
-                elements.saveStatus.textContent = '📱 Saved offline';
-                return;
-            }
+            if (!navigator.onLine) { el.saveStatus.className = 'save-status queued'; el.saveStatus.textContent = '📱 Offline saved'; return; }
             
             try {
-                await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-                savePendingData(getPendingData().filter(d => d._tempId !== dataWithId._tempId));
-                elements.saveStatus.className = 'save-status saved';
-                elements.saveStatus.textContent = '✓ Saved';
+                await fetch(BACKEND, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) });
+                savePending(getPending().filter(x => x._id !== dId._id));
+                el.saveStatus.className = 'save-status saved';
+                el.saveStatus.textContent = '✓ Saved';
             } catch (e) {
-                elements.saveStatus.className = 'save-status error';
-                elements.saveStatus.textContent = '⚠ Failed - stored locally';
-                elements.retryBtn.style.display = 'block';
+                el.saveStatus.className = 'save-status error';
+                el.saveStatus.textContent = '⚠ Failed';
+                el.retryBtn.style.display = 'block';
             }
         }
         
-        async function syncPendingData() {
-            const pending = getPendingData();
-            for (const data of pending) {
+        async function syncPending() {
+            for (const d of getPending()) {
                 try {
-                    await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-                    savePendingData(getPendingData().filter(d => d._tempId !== data._tempId));
+                    await fetch(BACKEND, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) });
+                    savePending(getPending().filter(x => x._id !== d._id));
                 } catch { break; }
             }
-            updatePendingBadge();
+            updBadge();
         }
         
-        function retrySync() {
-            if (navigator.onLine) { syncPendingData(); saveToBackend(buildResultData()); }
-            else alert('Still offline. Data saved locally.');
-        }
+        function retrySync() { if (navigator.onLine) { syncPending(); saveToBackend(buildData()); } else alert('Offline'); }
         
         // Results
-        function showResultsAndSave() {
-            showScreen('results');
-            document.getElementById('subjectIdDisplay').textContent = `Subject ID: ${state.subjectId}`;
-            
-            const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
-            const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
-            
-            document.getElementById('rightLogMAR').textContent = `LogMAR: ${state.rightEyeLogMAR.toFixed(1)}`;
-            document.getElementById('rightSnellen').textContent = `Snellen: ${SNELLEN_VALUES[rightLine]}`;
-            document.getElementById('rightDecimal').textContent = `Decimal VA: ${Math.pow(10, -state.rightEyeLogMAR).toFixed(2)}`;
-            
-            document.getElementById('leftLogMAR').textContent = `LogMAR: ${state.leftEyeLogMAR.toFixed(1)}`;
-            document.getElementById('leftSnellen').textContent = `Snellen: ${SNELLEN_VALUES[leftLine]}`;
-            document.getElementById('leftDecimal').textContent = `Decimal VA: ${Math.pow(10, -state.leftEyeLogMAR).toFixed(2)}`;
-            
-            document.getElementById('timestamp').textContent = `Tested: ${new Date().toLocaleString()}`;
-            
-            saveToBackend(buildResultData());
+        function showResults() {
+            showScr('res');
+            document.getElementById('subjIdDisp').textContent = 'Subject: ' + st.subj;
+            const ri = lineFromLog(st.rLog), li = lineFromLog(st.lLog);
+            document.getElementById('rLogMAR').textContent = 'LogMAR: ' + st.rLog.toFixed(1);
+            document.getElementById('rSnellen').textContent = 'Snellen: ' + SNELLEN[ri];
+            document.getElementById('rDec').textContent = 'Decimal: ' + Math.pow(10, -st.rLog).toFixed(2);
+            document.getElementById('lLogMAR').textContent = 'LogMAR: ' + st.lLog.toFixed(1);
+            document.getElementById('lSnellen').textContent = 'Snellen: ' + SNELLEN[li];
+            document.getElementById('lDec').textContent = 'Decimal: ' + Math.pow(10, -st.lLog).toFixed(2);
+            document.getElementById('timeStamp').textContent = 'Tested: ' + new Date().toLocaleString();
+            saveToBackend(buildData());
         }
         
-        function shareResults() {
-            const rightLine = getLineFromLogMAR(state.rightEyeLogMAR);
-            const leftLine = getLineFromLogMAR(state.leftEyeLogMAR);
-            const text = `EyeScopeAI Results\nSubject: ${state.subjectId}\nOptotype: ${selectedOptotype === 'E' ? 'Tumbling E' : 'Landolt C'}\n\nOD: ${SNELLEN_VALUES[rightLine]} (LogMAR ${state.rightEyeLogMAR.toFixed(1)})\nOS: ${SNELLEN_VALUES[leftLine]} (LogMAR ${state.leftEyeLogMAR.toFixed(1)})`;
-            if (navigator.share) navigator.share({ title: 'EyeScopeAI', text }).catch(() => {});
-            else navigator.clipboard.writeText(text).then(() => alert('Copied!')).catch(() => alert(text));
+        function share() {
+            const ri = lineFromLog(st.rLog), li = lineFromLog(st.lLog);
+            const nm = { E:'Tumbling E', C:'Landolt C', U:'Custom U' };
+            const t = `EyeScopeAI v2.0\n${st.subj}\n${nm[opto]} @ 2m\n\nOD: ${SNELLEN[ri]} (${st.rLog.toFixed(1)})\nOS: ${SNELLEN[li]} (${st.lLog.toFixed(1)})`;
+            if (navigator.share) navigator.share({ title: 'EyeScopeAI', text: t }).catch(() => {});
+            else navigator.clipboard.writeText(t).then(() => alert('Copied')).catch(() => alert(t));
         }
         
         // Init
-        loadCalibration();
-        loadOptotypePreference();
-        updateOnlineStatus();
-        updatePendingBadge();
-        updateCalibrationBox();
-        if (navigator.onLine) syncPendingData();
-        
-        window.addEventListener('beforeunload', e => { if (screens.test.classList.contains('active')) { e.preventDefault(); e.returnValue = ''; }});
-        document.addEventListener('dblclick', e => e.preventDefault());
-        
-        console.log('EyeScopeAI v1.3.0 - Tumbling E + Landolt C');
+        loadCal();
+        loadOpto();
+        updOnline();
+        updBadge();
+        updCalBox();
+        if (navigator.onLine) syncPending();
+        console.log('EyeScopeAI v2.1 | 2m | E+C+U | Beep');
     </script>
 </body>
 </html>
